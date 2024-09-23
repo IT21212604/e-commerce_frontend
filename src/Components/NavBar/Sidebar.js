@@ -1,11 +1,11 @@
-import React from 'react';
-import './Sidebar.css'; // Importing the CSS file for styling
+import React, { useState } from 'react';
+import './Sidebar.css'; // Import the CSS file for styling
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSearch, faTachometerAlt, faTag, faBoxOpen, faBullhorn, faChartLine, faMoneyBillAlt, faFileImport, faUserCircle, faCogs, faNewspaper } from '@fortawesome/free-solid-svg-icons'; // Import icons
+import { faSearch, faTachometerAlt, faTag, faBoxOpen, faBullhorn, faChartLine, faMoneyBillAlt, faFileImport, faUserCircle, faCogs, faNewspaper, faBars } from '@fortawesome/free-solid-svg-icons'; // Import icons
 
-const Sidebar = () => {
+const Sidebar = ({ isOpen, toggleSidebar }) => {
   return (
-    <div className="sidebar">
+    <div className={`sidebar ${isOpen ? 'open' : ''}`}>
       <div className="sidebar-logo">
         <h2>Sellforce</h2>
         <p>Your Sales Solution</p>
@@ -21,7 +21,7 @@ const Sidebar = () => {
             Dashboard
           </a>
         </li>
-        <li className="active">
+        <li className="">
           <a href="#">
             <FontAwesomeIcon icon={faTag} />
             Sales
@@ -30,7 +30,7 @@ const Sidebar = () => {
         <li>
           <a href="#">
             <FontAwesomeIcon icon={faBoxOpen} />
-            Product <span className="badge">57</span>
+            Product 
           </a>
         </li>
         <li>
@@ -80,6 +80,9 @@ const Sidebar = () => {
             </a>
           </li>
         </ul>
+      </div>
+      <div className="menu-icon" onClick={toggleSidebar}>
+        <FontAwesomeIcon icon={faBars} />
       </div>
     </div>
   );

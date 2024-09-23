@@ -1,5 +1,35 @@
 /* Main sidebar styling */
 .sidebar {
+  background-color: #1c2331;
+  width: 250px;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  left: -250px; /* Hidden initially */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 20px;
+  box-shadow: 2px 0px 5px rgba(0, 0, 0, 0.2);
+  transition: left 0.3s ease;
+}
+
+.sidebar.open {
+  left: 0; /* Shown when open */
+}
+
+.menu-icon {
+  position: absolute;
+  top: 10px;
+  right: -30px;
+  background-color: #1c2331;
+  color: white;
+  padding: 10px;
+  border-radius: 50%;
+  cursor: pointer;
+}
+Main sidebar styling
+.sidebar {
     background-color: #1c2331;
     width: 250px;
     height: 100vh;
