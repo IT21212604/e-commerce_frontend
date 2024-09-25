@@ -1,6 +1,7 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import "react-toastify/dist/ReactToastify.css";
 import Register from './Components/User/Register';
 import Login from './Components/User/Login';
 import AddProduct from './Components/Product/AddProduct';
