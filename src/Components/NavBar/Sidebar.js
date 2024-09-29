@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
+// Sidebar.js
+import React from 'react';
 import './Sidebar.css'; // Import the CSS file for styling
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSearch, faTachometerAlt, faTag, faBoxOpen, faBullhorn, faChartLine, faMoneyBillAlt, faFileImport, faUserCircle, faCogs, faNewspaper, faBars } from '@fortawesome/free-solid-svg-icons'; // Import icons
+import { faSearch, faTachometerAlt, faTag, faBoxOpen, faBullhorn, faChartLine, faMoneyBillAlt, faFileImport, faUserCircle, faCogs, faNewspaper } from '@fortawesome/free-solid-svg-icons'; // Import icons
 
-const Sidebar = ({ isOpen, toggleSidebar }) => {
+const Sidebar = ({ isOpen }) => {
   return (
     <div className={`sidebar ${isOpen ? 'open' : ''}`}>
       <div className="sidebar-logo">
@@ -21,7 +22,7 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
             Dashboard
           </a>
         </li>
-        <li className="">
+        <li>
           <a href="#">
             <FontAwesomeIcon icon={faTag} />
             Sales
@@ -30,7 +31,7 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
         <li>
           <a href="#">
             <FontAwesomeIcon icon={faBoxOpen} />
-            Product 
+            Product
           </a>
         </li>
         <li>
@@ -80,9 +81,6 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
             </a>
           </li>
         </ul>
-      </div>
-      <div className="menu-icon" onClick={toggleSidebar}>
-        <FontAwesomeIcon icon={faBars} />
       </div>
     </div>
   );
