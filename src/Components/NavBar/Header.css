@@ -1,0 +1,50 @@
+/* Header.css */
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #000000; /* Black background */
+  color: white;
+  padding: 10px 20px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000; /* Ensure the header is on top */
+}
+
+.menu-button {
+  cursor: pointer;
+  font-size: 24px;
+}
+
+.sidebar-logo {
+  display: flex;
+  flex-direction: column;
+  margin-left: 15px; /* Space from the left corner */
+  text-align: left;
+}
+
+.sidebar-logo h2 {
+  margin: 0;
+  font-size: 18px;
+}
+
+.sidebar-logo p {
+  margin: 0;
+  font-size: 12px;
+  color: #b0bec5;
+}
+
+.app-title {
+  margin: 0 auto; /* Center the title */
+}
+
+.auth-buttons {
+  display: flex;
+  gap: 10px;
+}
+
+.auth-buttons .btn {
+  color: white;
+}

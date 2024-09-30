@@ -1,0 +1,23 @@
+/* Custom CSS for the user details table */
+.user-details-container {
+  margin-top: 50px;
+}
+
+.user-details {
+  background-color: #f8f9fa;
+  border-radius: 8px;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+}
+
+.table {
+  margin-top: 20px;
+}
+
+thead.thead-dark th {
+  background-color: #343a40;
+  color: white;
+}
+
+.with-sidebar {
+  margin-left: 250px; /* Adjust for when the sidebar is open */
+}

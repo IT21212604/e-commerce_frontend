@@ -1,3 +1,5 @@
+
+// export default new Service();
 import axios from "axios";
 
 // Set the base URL of the API
@@ -6,17 +8,17 @@ const API_BASE_URL = "https://localhost:7237/api";
 class Service {
   register(name, email, password, userType) {
     return axios.post(`${API_BASE_URL}/Auth/register`, {
-      name: name,
-      email: email,
-      password: password,
-      userType: userType,
+      name,
+      email,
+      password,
+      userType,
     });
   }
 
   login(email, password) {
     return axios.post(`${API_BASE_URL}/Auth/login`, {
-      email: email,
-      password: password,
+      email,
+      password,
     });
   }
 
