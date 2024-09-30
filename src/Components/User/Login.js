@@ -45,7 +45,7 @@ function Login() {
       .then((res) => {
         console.log("API Response:", res); // Log the full response to inspect
   
-        if (res.status === 200 && res.data.accessToken) {
+        if (res.status === 200 && res.data.accessToken != null) {
           sessionStorage.setItem("token", res.data.accessToken);
           sessionStorage.setItem("isLogged", true);
   
