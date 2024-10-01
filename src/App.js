@@ -9,6 +9,8 @@ import AddProduct from './Components/Product/AddProduct';
 import Sidebar from './Components/NavBar/Sidebar';
 import Header from './Components/NavBar/Header'; // Import Header
 import ViewUserDetails from './Components/User/ViewUserDetails';
+import OrderList from './Components/Order/OrderList';
+import OrderDetail from './Components/Order/OrderDetail';
 
 function App() {
   const [isSidebarOpen, setSidebarOpen] = useState(false);
@@ -28,6 +30,8 @@ function App() {
             <Route path="/login" element={<Login />} />
             <Route path="/add-product" element={<AddProduct />} />
             <Route path="/viewUser" element={<ViewUserDetails />} />
+            <Route path="/orderList" element={<OrderList />} />
+            <Route path="/orderDetail/:id" element={<OrderDetail />} />
           </Routes>
         </main>
       </div>

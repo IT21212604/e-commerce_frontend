@@ -1,0 +1,139 @@
+/* General styles for the order management page */
+.order-list-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 50px 50px; /* Adjust padding to accommodate fixed header */
+    position: relative;
+}
+
+/* Styling for the page title */
+.order-list-title {
+    font-size: 2.0rem;
+    font-weight: bold;
+    color: #343a40;
+    margin-bottom: 30px;
+    text-align: center;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    padding-top: 50px; /* Ensure spacing from the top (if header overlaps) */
+}
+
+/* Table Styles */
+.order-list-table {
+    width: 100%;
+    margin-bottom: 1rem;
+    color: #212529;
+    background-color: #f8f9fa;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.order-list-table th,
+.order-list-table td {
+    vertical-align: middle;
+    text-align: center;
+    padding: 15px;
+    border: none;
+    border-bottom: 1px solid #dee2e6;
+}
+
+/* Table Head Styles */
+.order-list-table thead th {
+    background-color: #6f8195;
+    color: #fff;
+    font-weight: 600;
+    text-transform: uppercase;
+    padding: 20px;
+}
+
+/* Table Body Rows */
+.order-list-table tbody tr:nth-of-type(odd) {
+    background-color: #f8f9fa;
+}
+
+.order-list-table tbody tr:hover {
+    background-color: #e9ecef;
+    transform: scale(1.02);
+    transition: all 0.2s ease-in-out;
+}
+
+/* Button Group Styling */
+.btn-group {
+    display: flex;
+    justify-content: center; /* Center the buttons horizontally */
+    gap: 15px; /* Space between the buttons */
+    align-items: center; /* Align the buttons vertically */
+}
+
+/* Button Styles */
+.order-list-btn {
+    font-size: 0.875rem;
+    padding: 8px 16px;
+    border-radius: 4px;
+    display: inline-block;
+    width: 100%;
+    max-width: 150px;
+}
+
+/* Primary Button */
+.order-list-btn-primary {
+    background-color: #007bff;
+    border-color: #007bff;
+    color: #fff;
+    transition: background-color 0.3s ease;
+}
+
+/* Success Button */
+.order-list-btn-success {
+    background-color: #28a745;
+    border-color: #28a745;
+    color: #fff;
+    transition: background-color 0.3s ease;
+}
+
+/* Danger Button */
+.order-list-btn-danger {
+    background-color: #dc3545;
+    border-color: #dc3545;
+    color: #fff;
+    transition: background-color 0.3s ease;
+}
+
+/* Button Hover Effects */
+.order-list-btn-primary:hover {
+    background-color: #0056b3;
+    border-color: #004085;
+}
+
+.order-list-btn-success:hover {
+    background-color: #218838;
+    border-color: #1e7e34;
+}
+
+.order-list-btn-danger:hover {
+    background-color: #c82333;
+    border-color: #bd2130;
+}
+
+/* Vendor Status Styling */
+.vendor-status {
+    font-size: 0.9rem;
+    color: #495057;
+    text-align: left;
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+    .order-list-table {
+        font-size: 0.9rem;
+    }
+
+    .order-list-btn {
+        font-size: 0.8rem;
+        padding: 6px 12px;
+    }
+
+    .order-list-title {
+        font-size: 2rem;
+    }
+}

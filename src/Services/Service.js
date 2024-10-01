@@ -34,6 +34,17 @@ class Service {
     return axios.get(`${API_BASE_URL}/User`);
   }
 
+  activateUser(id){ //token, id, formData
+    // const config = {
+    //     headers: { 
+    //         'Access-Control-Allow-Origin': "*", 
+    //         'Authorization': 'Bearer ' + token 
+    //     }
+    // }
+
+    return axios.put(`${API_BASE_URL}/User/activeUser/${id}?status=Active`);
+  }
+
 
   // Method to add a Product  GetProductById
   addProduct(formData) {
@@ -118,6 +129,54 @@ class Service {
         status: status
       }
     ); //config
+  }
+
+   // Function to get all orders
+   getAllOrders() { //token
+    // const config = {
+    //     headers: { 
+    //         'Access-Control-Allow-Origin': "*", 
+    //         'Authorization': 'Bearer ' + token 
+    //     }
+    // }
+
+    return axios.get(`${API_BASE_URL}/Orders`);  
+  }
+
+  // Method to get a Order  
+  getOrderById(id) { //token, id
+    // const config = {
+    //     headers: { 
+    //         'Access-Control-Allow-Origin': "*", 
+    //         'Authorization': 'Bearer ' + token 
+    //     }
+    // }
+
+    return axios.get(`${API_BASE_URL}/Orders/${id}`);
+  }
+
+  // Method to Confirm Canceling Order  
+  cancelOrder(id) { //token, id
+    // const config = {
+    //     headers: { 
+    //         'Access-Control-Allow-Origin': "*", 
+    //         'Authorization': 'Bearer ' + token 
+    //     }
+    // }
+
+    return axios.patch(`${API_BASE_URL}/Orders/confirm-cancel/${id}`);
+  }
+
+  // Method to Mark as Delivered  
+  markOrderAsDelivered(id) { //token, id
+    // const config = {
+    //     headers: { 
+    //         'Access-Control-Allow-Origin': "*", 
+    //         'Authorization': 'Bearer ' + token 
+    //     }
+    // }
+
+    return axios.patch(`${API_BASE_URL}/Orders/deliver/${id}`);
   }
 
 }

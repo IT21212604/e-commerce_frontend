@@ -1,0 +1,111 @@
+/* General styles for the order detail page */
+.order-detail-container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 100px;
+    background-color: #f8f9fa;
+    border-radius: 8px;
+    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* Header styles */
+.order-detail-header {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #343a40;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+/* Section titles */
+.order-detail-section-title {
+    font-size: 1.8rem; /* Increase the font size */
+    color: #495057;
+    margin-bottom: 20px;
+    font-weight: 600;
+    text-align: center; /* Align text to the center */
+    text-transform: uppercase; /* Uppercase letters for a cleaner look */
+}
+
+/* Styling for the section titles like "Customer Information" */
+.order-detail-sub-title {
+    font-size: 1.8rem; /* Increase the font size */
+    color: #333; /* Darker color for better contrast */
+    margin-bottom: 15px; /* Add some spacing at the bottom */
+    font-weight: 300; /* Bolder text for emphasis */
+    text-align: center; /* Center align the title */
+    letter-spacing: 1px; /* Add space between letters */
+    border-bottom: 2px solid #a1bad4; /* Add a bottom border */
+    padding-bottom: 10px; /* Add padding to the bottom */
+    width: 100%; /* Make sure the title takes full width */
+}
+
+
+/* Customer and shipping information */
+.order-detail-info {
+    font-size: 1rem;
+    margin: 5px 0;
+}
+
+.order-detail-info strong {
+    font-weight: 600;
+}
+
+/* Table Styles */
+.order-detail-table {
+    width: 100%;
+    margin-bottom: 20px;
+    color: #212529;
+    background-color: #fff;
+    border: 1px solid #dee2e6;
+}
+
+.order-detail-table th,
+.order-detail-table td {
+    padding: 12px;
+    text-align: center;
+    vertical-align: middle;
+    border: 1px solid #dee2e6;
+}
+
+.order-detail-table th {
+    background-color: #007bff;
+    color: #fff;
+    font-weight: 600;
+    font-size: 1rem;
+}
+
+.order-detail-table tbody tr:nth-of-type(odd) {
+    background-color: #f2f2f2;
+}
+
+.order-detail-table tbody tr:hover {
+    background-color: #e9ecef;
+}
+
+/* Responsive styles for mobile */
+@media (max-width: 768px) {
+    .order-detail-container {
+        padding: 15px;
+    }
+
+    .order-detail-header {
+        font-size: 1.6rem;
+    }
+
+    .order-detail-section-title {
+        font-size: 1rem;
+    }
+
+    .order-detail-table th,
+    .order-detail-table td {
+        font-size: 0.875rem;
+        padding: 8px;
+    }
+}
+
+/* Custom loader style for loading message */
+.order-detail-loading {
+    font-size: 1.2rem;
+    color: #007bff;
+}
