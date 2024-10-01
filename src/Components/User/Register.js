@@ -1,10 +1,9 @@
 import React, { useState } from "react";
 import Sidebar from "../NavBar/Sidebar"; // Import Sidebar component
 import "./Register.css"; // Import custom CSS file
-
 import { ToastContainer, toast } from 'react-toastify';
 import Service from "../../Services/Service";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom"; // Import Link for navigation
 
 function Register() {
   const navigate = useNavigate();
@@ -12,7 +11,7 @@ function Register() {
   const [name, setName] = useState('');
   const [password, setPassword] = useState('');
   const [email, setEmail] = useState('');
-  const [userType, setUserType] = useState('Customer'); // Default user type
+  const [userType, setUserType] = useState(''); // Default user type
 
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
@@ -126,14 +125,20 @@ function Register() {
                 onChange={(e) => setUserType(e.target.value)}
                 required
               >
-                <option value="Customer">Customer</option>
+                <option value="Administrator">Administrator</option>
                 <option value="Vendor">Vendor</option>
+                <option value="CSR">CSR</option>
               </select>
             </div>
             <button type="submit" className="btn btn-primary w-100">
               Register
             </button>
           </form>
+
+          {/* Section to redirect to login */}
+          <div className="mt-4 text-center">
+            <p>Already have an account? <Link to="/login">Login here</Link></p>
+          </div>
         </div>
       </div>
     </>
@@ -141,4 +146,3 @@ function Register() {
 }
 
 export default Register;
-
