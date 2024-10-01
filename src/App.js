@@ -8,7 +8,7 @@ import Login from './Components/User/Login';
 import AddProduct from './Components/Product/AddProduct';
 import Sidebar from './Components/NavBar/Sidebar';
 import Header from './Components/NavBar/Header'; // Import Header
-import viewUserDetails from './Components/User/viewUserDetails';
+import ViewUserDetails from './Components/User/ViewUserDetails';
 
 function App() {
   const [isSidebarOpen, setSidebarOpen] = useState(false);
@@ -27,7 +27,7 @@ function App() {
             <Route path="/register" element={<Register />} />
             <Route path="/login" element={<Login />} />
             <Route path="/add-product" element={<AddProduct />} />
-            <Route path="/viewUser" element={<viewUserDetails />} />
+            <Route path="/viewUser" element={<ViewUserDetails />} />
           </Routes>
         </main>
       </div>

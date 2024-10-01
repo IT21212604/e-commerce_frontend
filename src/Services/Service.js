@@ -22,6 +22,19 @@ class Service {
     });
   }
 
+   // Function to get users
+   getUsers() { //token
+    // const config = {
+    //     headers: { 
+    //         'Access-Control-Allow-Origin': "*", 
+    //         'Authorization': 'Bearer ' + token 
+    //     }
+    // }
+
+    return axios.get(`${API_BASE_URL}/User`);
+  }
+
+
   // Method to add a Product  GetProductById
   addProduct(formData) {
     // const config = {

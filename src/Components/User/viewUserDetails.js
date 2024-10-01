@@ -17,18 +17,36 @@ function ViewUserDetails() {
   // Fetch users on component mount
   useEffect(() => {
     Service.getUsers() // Call the Service to fetch users
-      .then((data) => {
-        setUsers(data); // Set fetched users to state
-        toast.success("User data loaded successfully", {
-          position: "top-right",
-          autoClose: 3000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "colored",
-        });
+      .then((response) => {
+        console.log("API Response:", response.data); // Log the API response
+
+        // Check if the response contains the actual user data
+        const usersData = response.data; // Adjust this based on the API response structure
+        
+        if (Array.isArray(usersData)) {
+          setUsers(usersData); // Set fetched users to state if it's an array
+          toast.success("User data loaded successfully", {
+            position: "top-right",
+            autoClose: 3000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "colored",
+          });
+        } else {
+          toast.error("Unexpected response format from API", {
+            position: "top-right",
+            autoClose: 3000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "colored",
+          });
+        }
       })
       .catch((error) => {
         console.error("Error fetching users:", error);
