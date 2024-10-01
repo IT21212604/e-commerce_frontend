@@ -7,10 +7,10 @@ import { faSearch, faTachometerAlt, faTag, faBoxOpen, faBullhorn, faChartLine, f
 const Sidebar = ({ isOpen }) => {
   return (
     <div className={`sidebar ${isOpen ? 'open' : ''}`}>
-      <div className="sidebar-logo">
+      {/* <div className="sidebar-logo">
         <h2>Sellforce</h2>
         <p>Your Sales Solution</p>
-      </div>
+      </div> */}
       <div className="search-box">
         <input type="text" placeholder="Search" />
         <FontAwesomeIcon icon={faSearch} className="search-icon" />
@@ -23,15 +23,21 @@ const Sidebar = ({ isOpen }) => {
           </a>
         </li>
         <li>
-          <a href="#">
+          <a href="/viewUser">
+            <FontAwesomeIcon icon={faUserCircle} />
+            User Details
+          </a>
+        </li>
+        <li>
+          <a href="/orderList">
             <FontAwesomeIcon icon={faTag} />
-            Sales
+            Order Details
           </a>
         </li>
         <li>
           <a href="#">
             <FontAwesomeIcon icon={faBoxOpen} />
-            Product
+            Product Details
           </a>
         </li>
         <li>
@@ -49,7 +55,7 @@ const Sidebar = ({ isOpen }) => {
         <li>
           <a href="#">
             <FontAwesomeIcon icon={faMoneyBillAlt} />
-            Sell On Emag
+            Inventory 
           </a>
         </li>
         <li>
@@ -58,14 +64,9 @@ const Sidebar = ({ isOpen }) => {
             Super XML Import
           </a>
         </li>
-        <li>
-          <a href="#">
-            <FontAwesomeIcon icon={faUserCircle} />
-            ERP / CRM
-          </a>
-        </li>
+        
       </ul>
-      <div className="sidebar-footer">
+      {/* <div className="sidebar-footer">
         <h3>CONFIGURATION</h3>
         <ul>
           <li>
@@ -81,7 +82,7 @@ const Sidebar = ({ isOpen }) => {
             </a>
           </li>
         </ul>
-      </div>
+      </div> */}
     </div>
   );
 };

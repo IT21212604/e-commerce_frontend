@@ -37,7 +37,7 @@
 }
 
 .search-box {
-  margin: 20px 0;
+  margin: 80px 0;
   position: relative;
 }
 
@@ -82,7 +82,7 @@
 }
 
 .sidebar-menu li a:hover {
-  background-color: #273347;
+  background-color: #1abc9c;
   color: #fff;
 }
 
