@@ -1,0 +1,116 @@
+/* Container for the product list page */
+.product-list-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Center items horizontally */
+  padding: 20px; /* Padding around the container */
+  background-color: #f8f9fa; /* Light background for contrast */
+  min-height: 100vh; /* Ensure it takes full height */
+}
+
+/* Heading styling */
+.product-list-container h2 {
+  color: #343a40; /* Dark gray color for the heading */
+  font-size: 2rem; /* Larger font size for emphasis */
+  margin-bottom: 20px; /* Space below the heading */
+}
+
+/* Filters layout */
+.d-flex {
+  display: flex; /* Flex layout for filters */
+  justify-content: space-between; /* Space between filters */
+  width: 100%; /* Full width for flex container */
+  margin-bottom: 20px; /* Space below filters */
+}
+
+/* Individual filter styling */
+.w-50 {
+  width: 48%; /* Set width of filters to take up space */
+}
+
+/* Dropdown styling */
+#categorySelect,
+#vendorSelect {
+  border-radius: 5px; /* Rounded corners */
+  border: 1px solid #007bff; /* Blue border */
+  padding: 10px; /* Padding inside the dropdown */
+  font-size: 1rem; /* Font size for readability */
+}
+
+/* Table styling */
+.table {
+  width: 100%; /* Full width */
+  border-collapse: collapse; /* Remove gaps between cells */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+  margin-top: 20px; /* Space above the table */
+}
+
+/* Table header styling */
+.table-header th {
+  background-color: #b97a67; /* Blue background for header */
+  color: white; /* White text color */
+  padding: 12px; /* Padding in header cells */
+  text-align: left; /* Align text to the left */
+  font-weight: bold; /* Bold text for emphasis */
+  border-bottom: 2px solid #be5126; /* Darker blue border */
+}
+
+/* Table body styling */
+.table td {
+  padding: 12px; /* Padding in body cells */
+  border-bottom: 1px solid #dee2e6; /* Light gray border for separation */
+  background-color: white; /* White background for body cells */
+}
+
+/* Hover effect for table rows */
+.table tbody tr:hover {
+  background-color: #f1f1f1; /* Light gray background on hover */
+  cursor: pointer; /* Pointer cursor on hover */
+}
+
+/* Empty state styling */
+.table td.text-center {
+  color: #6c757d; /* Gray color for empty state message */
+  font-style: italic; /* Italic for emphasis */
+}
+
+/* Button styling */
+/* Centering the button container */
+.mb-3.d-flex.justify-content-center {
+  display: flex;
+  justify-content: center; /* Center the buttons */
+  gap: 10px; /* Space between the buttons */
+}
+
+/* Button styling (if needed for further customization) */
+.btn {
+  min-width: 100px; /* Optional: Ensures buttons have a minimum width */
+}
+
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .product-list-container {
+      padding: 10px; /* Less padding on small screens */
+  }
+
+  .table {
+      font-size: 0.9rem; /* Smaller font size for small screens */
+  }
+
+  #categorySelect,
+  #vendorSelect {
+      font-size: 0.9rem; /* Smaller font size for the dropdown */
+  }
+
+  /* Stack filters vertically on small screens */
+  .d-flex {
+      flex-direction: column; /* Change to column layout */
+      align-items: stretch; /* Align items to fill available width */
+  }
+
+  .w-50 {
+      width: 100%; /* Full width on small screens */
+      margin-bottom: 10px; /* Space between stacked filters */
+  }
+}
