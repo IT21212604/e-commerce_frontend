@@ -34,6 +34,18 @@ class Service {
     return axios.get(`${API_BASE_URL}/User`);
   }
 
+  // Function to get users
+  getUserById(id) { //token
+    // const config = {
+    //     headers: { 
+    //         'Access-Control-Allow-Origin': "*", 
+    //         'Authorization': 'Bearer ' + token 
+    //     }
+    // }
+
+    return axios.get(`${API_BASE_URL}/User/${id}`);
+  }
+
   activateUser(id){ //token, id, formData
     // const config = {
     //     headers: { 
@@ -111,7 +123,7 @@ class Service {
     //     }
     // }
 
-    return axios.put(`${API_BASE_URL}/Product/UpdateProductStatusById/${id}`, {status: status}); //config
+    return axios.put(`${API_BASE_URL}/Product/UpdateProductStatusById/${id}?status=${status}`); //config
   }
 
   updateProductsStatusByVendorAndCategory(vendorId, category, status){
@@ -122,12 +134,7 @@ class Service {
     //     }
     // }
 
-    return axios.put(`${API_BASE_URL}/Product/updateProductsStatusByVendorAndCategory`, 
-      {
-        vendorId: vendorId,
-        category: category,
-        status: status
-      }
+    return axios.put(`${API_BASE_URL}/Product/UpdateProductsStatusByVendorAndCategory?vendorId=${vendorId}&category=${category}&status=${status}`
     ); //config
   }
 
