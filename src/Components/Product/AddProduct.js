@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Sidebar from '../NavBar/Sidebar'; // Import Sidebar component
 import './AddProduct.css'; // Import custom CSS for styling
 import { ToastContainer, toast } from 'react-toastify'; // Import Toast for notifications
@@ -9,23 +9,49 @@ function AddProduct() {
   const [formData, setFormData] = useState({
     productId: '',
     name: '',
-    category: '',
-    vendorId: '',
+    category: '', // Initially empty for dropdown
+    vendorId: '', // Initially empty for vendor ID
     price: 0,
     description: '',
     stockQuantity: 0,
     status: 'active', // Default status
-    ratings: [], // Empty array for ratings initially
-    imageUrl: '',
   });
-
-
-  const [imageFile, setImageFile] = useState(null); // State for the image file
+  
+  const [categories, setCategories] = useState([]); // State for categories
+  const [vendors, setVendors] = useState([]); // State for vendors
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
   const toggleSidebar = () => {
     setIsSidebarOpen(!isSidebarOpen);
   };
+
+  // Fetch categories and vendors when component mounts
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        // Fetch all products to get unique categories
+        const productResponse = await Service.getAllProductList();
+        const uniqueCategories = [
+          ...new Set(productResponse.data.map((product) => product.category)),
+        ];
+        setCategories(uniqueCategories);
+
+        // Fetch all users to get vendors
+        const usersResponse = await Service.getUsers();
+        console.log(usersResponse)
+        const vendorUsers = usersResponse.data.filter(user => user.userType === 'Vendor'); // Filter for vendor role
+        setVendors(vendorUsers);
+        console.log(vendors)
+      } catch (err) {
+        console.error("Error fetching data:", err);
+        toast.error("Failed to load categories or vendors. Please try again.", {
+          theme: "colored",
+        });
+      }
+    };
+
+    fetchData();
+  }, []);
 
   const handleChange = (e) => {
     setFormData({
@@ -35,15 +61,11 @@ function AddProduct() {
   };
 
   const validateForm = () => {
-    if (!formData.productId || !formData.name || !formData.price || !formData.category || !formData.vendorId || !formData.stockQuantity || !imageFile) {
+    if (!formData.productId || !formData.name || !formData.price || !formData.category || !formData.vendorId || !formData.stockQuantity) {
       toast.error("Please fill in all required fields", { theme: "colored" });
       return false;
     }
     return true;
-  };
-
-  const handleImageChange = (e) => {
-    setImageFile(e.target.files[0]); // Set the selected image file
   };
 
   const handleSubmit = async (e) => {
@@ -60,11 +82,8 @@ function AddProduct() {
     };
 
     try {
-      // Get token from session storage
-      const token = sessionStorage.getItem("token");
-
       // Call the service to add the product
-      const response = await Service.addProduct(productData, token);
+      const response = await Service.addProduct(productData);
 
       if (response.status === 200 || response.status === 201) {
         toast.success("Product added successfully!", { theme: "colored" });
@@ -78,8 +97,6 @@ function AddProduct() {
           description: '',
           stockQuantity: 0,
           status: 'active', // Reset status to default
-          ratings: [], // Clear ratings
-          imageUrl: '',
         });
       }
     } catch (error) {
@@ -97,7 +114,7 @@ function AddProduct() {
 
       {/* Main content */}
       <div className={`add-product-container container mt-5 ${isSidebarOpen ? 'with-sidebar' : ''}`}>
-        <div className="form-inputs">
+        <div className="form-inputs mt-3">
           <h2 className="text-center mb-4">Add Product</h2>
           <form onSubmit={handleSubmit}>
             <div className="row">
@@ -127,25 +144,37 @@ function AddProduct() {
                 </div>
                 <div className="mb-3">
                   <label className="form-label">Category</label>
-                  <input
-                    type="text"
+                  <select
                     className="form-control"
                     name="category"
                     value={formData.category}
                     onChange={handleChange}
                     required
-                  />
+                  >
+                    <option value="">Select Category</option>
+                    {categories.map((category, index) => (
+                      <option key={index} value={category}>
+                        {category}
+                      </option>
+                    ))}
+                  </select>
                 </div>
                 <div className="mb-3">
-                  <label className="form-label">Vendor ID</label>
-                  <input
-                    type="text"
+                  <label className="form-label">Vendor</label>
+                  <select
                     className="form-control"
                     name="vendorId"
                     value={formData.vendorId}
                     onChange={handleChange}
                     required
-                  />
+                  >
+                    <option value="">Select Vendor</option>
+                    {vendors.map((vendor) => (
+                      <option key={vendor.id} value={vendor.id}>
+                        {vendor.name}
+                      </option>
+                    ))}
+                  </select>
                 </div>
               </div>
               {/* Right Column */}
@@ -182,16 +211,6 @@ function AddProduct() {
                     required
                   />
                 </div>
-                <div className="mb-3">
-                  <label className="form-label">Upload Image</label>
-                  <input
-                    type="file"
-                    className="form-control"
-                    accept="image/*"
-                    onChange={handleImageChange}
-                    required
-                  />
-                </div>
               </div>
             </div>
             <button type="submit" className="btn btn-primary w-100 mt-3">
@@ -205,5 +224,3 @@ function AddProduct() {
 }
 
 export default AddProduct;
-
-
