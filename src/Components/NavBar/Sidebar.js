@@ -1,88 +1,50 @@
-// Sidebar.js
-import React from 'react';
+import React, { useState } from 'react';
 import './Sidebar.css'; // Import the CSS file for styling
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSearch, faTachometerAlt, faTag, faBoxOpen, faBullhorn, faChartLine, faMoneyBillAlt, faFileImport, faUserCircle, faCogs, faNewspaper } from '@fortawesome/free-solid-svg-icons'; // Import icons
+import { faSearch, faTachometerAlt, faTag, faBoxOpen, faBullhorn, faChartLine, faMoneyBillAlt, faFileImport, faUserCircle } from '@fortawesome/free-solid-svg-icons'; // Import icons
 
 const Sidebar = ({ isOpen }) => {
+  // State for search input
+  const [searchTerm, setSearchTerm] = useState('');
+
+  // Menu items data
+  const menuItems = [
+    { name: 'Dashboard', icon: faTachometerAlt, link: '#' },
+    { name: 'User Details', icon: faUserCircle, link: '/viewUser' },
+    { name: 'Order Details', icon: faTag, link: '/orderList' },
+    { name: 'Product Details', icon: faBoxOpen, link: '#' },
+    { name: 'Promotions', icon: faBullhorn, link: '#' },
+    { name: 'Reports', icon: faChartLine, link: '#' },
+    { name: 'Inventory', icon: faMoneyBillAlt, link: '#' },
+    { name: 'Super XML Import', icon: faFileImport, link: '#' },
+  ];
+
+  // Filter the menu items based on the search term
+  const filteredItems = menuItems.filter(item =>
+    item.name.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
   return (
     <div className={`sidebar ${isOpen ? 'open' : ''}`}>
-      {/* <div className="sidebar-logo">
-        <h2>Sellforce</h2>
-        <p>Your Sales Solution</p>
-      </div> */}
       <div className="search-box">
-        <input type="text" placeholder="Search" />
+        <input
+          type="text"
+          placeholder="Search"
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)} // Update search term
+        />
         <FontAwesomeIcon icon={faSearch} className="search-icon" />
       </div>
       <ul className="sidebar-menu">
-        <li>
-          <a href="#">
-            <FontAwesomeIcon icon={faTachometerAlt} />
-            Dashboard
-          </a>
-        </li>
-        <li>
-          <a href="/viewUser">
-            <FontAwesomeIcon icon={faUserCircle} />
-            User Details
-          </a>
-        </li>
-        <li>
-          <a href="/orderList">
-            <FontAwesomeIcon icon={faTag} />
-            Order Details
-          </a>
-        </li>
-        <li>
-          <a href="#">
-            <FontAwesomeIcon icon={faBoxOpen} />
-            Product Details
-          </a>
-        </li>
-        <li>
-          <a href="#">
-            <FontAwesomeIcon icon={faBullhorn} />
-            Promotions
-          </a>
-        </li>
-        <li>
-          <a href="#">
-            <FontAwesomeIcon icon={faChartLine} />
-            Reports
-          </a>
-        </li>
-        <li>
-          <a href="#">
-            <FontAwesomeIcon icon={faMoneyBillAlt} />
-            Inventory 
-          </a>
-        </li>
-        <li>
-          <a href="#">
-            <FontAwesomeIcon icon={faFileImport} />
-            Super XML Import
-          </a>
-        </li>
-        
+        {filteredItems.map((item, index) => (
+          <li key={index}>
+            <a href={item.link}>
+              <FontAwesomeIcon icon={item.icon} />
+              {item.name}
+            </a>
+          </li>
+        ))}
       </ul>
-      {/* <div className="sidebar-footer">
-        <h3>CONFIGURATION</h3>
-        <ul>
-          <li>
-            <a href="#">
-              <FontAwesomeIcon icon={faCogs} />
-              Settings
-            </a>
-          </li>
-          <li>
-            <a href="#">
-              <FontAwesomeIcon icon={faNewspaper} />
-              News <span className="new-badge">New</span>
-            </a>
-          </li>
-        </ul>
-      </div> */}
     </div>
   );
 };

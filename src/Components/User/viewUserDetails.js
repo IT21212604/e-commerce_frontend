@@ -11,6 +11,7 @@ function ViewUserDetails() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [showModal, setShowModal] = useState(false); // Modal visibility state
   const [selectedUserId, setSelectedUserId] = useState(null); // Store the selected user ID
+  const [searchTerm, setSearchTerm] = useState(""); // State for search term
 
   // Function to toggle the sidebar
   const toggleSidebar = () => {
@@ -113,6 +114,16 @@ function ViewUserDetails() {
       });
   };
 
+  // Function to handle search input change
+  const handleSearchChange = (e) => {
+    setSearchTerm(e.target.value);
+  };
+
+  // Filtered users based on search term
+  const filteredUsers = users.filter(user =>
+    user.userType.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
   return (
     <>
       <Sidebar isOpen={isSidebarOpen} toggleSidebar={toggleSidebar} />
@@ -121,6 +132,23 @@ function ViewUserDetails() {
       <div className={`user-details-container container mt-5 ${isSidebarOpen ? "with-sidebar" : ""}`}>
         <div className="user-details shadow-lg p-4 rounded">
           <h2 className="text-center mb-4">User Details</h2>
+          
+          {/* Search Bar */}
+          <div className="d-flex justify-content-end mb-3">
+            <div className="input-group">
+              <input 
+                type="text" 
+                className="form-control" 
+                placeholder="Search by user type" 
+                value={searchTerm} 
+                onChange={handleSearchChange} 
+              />
+              <button className="btn btn-primary" onClick={() => setSearchTerm("")}>
+                Search
+              </button>
+            </div>
+          </div>
+
           <table className="table table-hover table-bordered table-striped">
             <thead className="thead-dark">
               <tr>
@@ -132,8 +160,8 @@ function ViewUserDetails() {
               </tr>
             </thead>
             <tbody>
-              {users.length > 0 ? (
-                users.map((user, index) => (
+              {filteredUsers.length > 0 ? (
+                filteredUsers.map((user, index) => (
                   <tr key={user.id}>
                     <th scope="row">{index + 1}</th>
                     <td>{user.name}</td>

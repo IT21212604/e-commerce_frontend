@@ -21,3 +21,22 @@ thead.thead-dark th {
 .with-sidebar {
   margin-left: 250px; /* Adjust for when the sidebar is open */
 }
+
+.input-group {
+  width: 300px; /* You can adjust the width as needed */
+}
+
+.input-group .form-control {
+  border-radius: 0.25rem 0 0 0.25rem; /* Rounded corners for the input */
+}
+
+.input-group .btn {
+  border-radius: 0 0.25rem 0.25rem 0; /* Rounded corners for the button */
+}
+
+/* Optional: Adding margin for responsiveness */
+@media (max-width: 768px) {
+  .input-group {
+    width: 100%; /* Full width on smaller screens */
+  }
+}
