@@ -7,43 +7,31 @@ import './Header.css'; // Import the CSS file for styling
 const Header = ({ toggleSidebar }) => {
   const navigate = useNavigate(); // Initialize useNavigate hook
 
-  // Function to handle navigation to different pages
-  const handleNavigation = (path) => {
-    navigate(path); // Navigate to the given path
+  // Function to handle navigation to login page
+  const handleLogin = () => {
+    navigate('/login'); // Navigate to the login page
+  };
+
+  // Function to handle navigation to signup page
+  const handleSignUp = () => {
+    navigate('/register'); // Navigate to the signup page
   };
 
   return (
     <header className="header">
-      <div className="left-section">
-        <div className="menu-button" onClick={toggleSidebar}>
-          <FontAwesomeIcon icon={faBars} />
-        </div>
-        <div className="sidebar-logo">
-          <h2>Sellforce</h2>
-          <p>Your Sales Solution</p>
-        </div>
+      <div className="menu-button" onClick={toggleSidebar}>
+        <FontAwesomeIcon icon={faBars} />
       </div>
-
-      <div className="nav-buttons">
-        <button className="btn btn-primary" onClick={() => handleNavigation('/dashboard')}>
-          Dashboard
-        </button>
-        <button className="btn btn-primary" onClick={() => handleNavigation('/viewUser')}>
-          User Details
-        </button>
-        <button className="btn btn-primary" onClick={() => handleNavigation('/orderList')}>
-          Order Details
-        </button>
-        <button className="btn btn-primary" onClick={() => handleNavigation('/productDetails')}>
-          Product Details
-        </button>
+      <div className="sidebar-logo">
+        <h2>Sellforce</h2>
+        <p>Your Sales Solution</p>
       </div>
-
+      <h1 className="app-title"></h1>
       <div className="auth-buttons">
-        <button className="btn btn-primary" onClick={() => handleNavigation('/login')}>
+        <button className="btn btn-primary" onClick={handleLogin}>
           Login
         </button>
-        <button className="btn btn-secondary" onClick={() => handleNavigation('/register')}>
+        <button className="btn btn-secondary" onClick={handleSignUp}>
           Sign Up
         </button>
       </div>

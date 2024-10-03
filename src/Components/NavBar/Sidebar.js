@@ -12,7 +12,7 @@ const Sidebar = ({ isOpen }) => {
     { name: 'Dashboard', icon: faTachometerAlt, link: '#' },
     { name: 'User Details', icon: faUserCircle, link: '/viewUser' },
     { name: 'Order Details', icon: faTag, link: '/orderList' },
-    { name: 'Product Details', icon: faBoxOpen, link: '#' },
+    { name: 'Product Details', icon: faBoxOpen, link: '/productList' }, // Updated link to ProductList.js
     { name: 'Promotions', icon: faBullhorn, link: '#' },
     { name: 'Reports', icon: faChartLine, link: '#' },
     { name: 'Inventory', icon: faMoneyBillAlt, link: '#' },

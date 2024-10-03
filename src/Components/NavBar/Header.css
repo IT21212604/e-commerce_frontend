@@ -1,3 +1,4 @@
+/* Header.css */
 .header {
   display: flex;
   align-items: center;
@@ -12,11 +13,6 @@
   z-index: 1000; /* Ensure the header is on top */
 }
 
-.left-section {
-  display: flex;
-  align-items: center;
-}
-
 .menu-button {
   cursor: pointer;
   font-size: 24px;
@@ -25,7 +21,7 @@
 .sidebar-logo {
   display: flex;
   flex-direction: column;
-  margin-left: 10px; /* Space between the menu button and logo */
+  margin-left: 15px; /* Space from the left corner */
   text-align: left;
 }
 
@@ -40,23 +36,8 @@
   color: #b0bec5;
 }
 
-.nav-buttons {
-  display: flex;
-  gap: 10px;
-  margin-left: auto; /* Aligns nav-buttons to the right */
-}
-
-.nav-buttons .btn {
-  color: white;
-  background-color: #007bff;
-  border: none;
-  padding: 5px 10px;
-  border-radius: 4px;
-  cursor: pointer;
-}
-
-.nav-buttons .btn:hover {
-  background-color: #0056b3;
+.app-title {
+  margin: 0 auto; /* Center the title */
 }
 
 .auth-buttons {
@@ -66,20 +47,4 @@
 
 .auth-buttons .btn {
   color: white;
-}
-
-.auth-buttons .btn-primary {
-  background-color: #c0c8c2;
-  border: none;
-  padding: 5px 10px;
-  border-radius: 4px;
-  cursor: pointer;
-}
-
-.auth-buttons .btn-secondary {
-  background-color: #aca79d;
-  border: none;
-  padding: 5px 10px;
-  border-radius: 4px;
-  cursor: pointer;
 }
