@@ -13,6 +13,7 @@ import ViewUserDetails from './Components/User/ViewUserDetails';
 import OrderList from './Components/Order/OrderList';
 import OrderDetail from './Components/Order/OrderDetail';
 import ProductList from './Components/Product/ProductList';
+import ViewInventoryList from './Components/Inventory/ViewInventoryList'
 
 function App() {
   const [isSidebarOpen, setSidebarOpen] = useState(false);
@@ -35,6 +36,7 @@ function App() {
             <Route path="/viewUser" element={<ViewUserDetails />} />
             <Route path="/orderList" element={<OrderList />} />
             <Route path="/orderDetail/:id" element={<OrderDetail />} />
+            <Route path="/viewInventory" element={< ViewInventoryList/>} />
           </Routes>
         </main>
       </div>
