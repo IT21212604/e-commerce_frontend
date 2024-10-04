@@ -6,12 +6,13 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import './OrderDetail.css';
 
 function OrderDetail() {
+  const [token, settoken] = useState(sessionStorage.getItem("token"));
   const { id } = useParams(); // Get the order ID from the route parameters
   const [order, setOrder] = useState(null);
 
   useEffect(() => {
     // Fetch order details by ID
-    Service.getOrderById(id)
+    Service.getOrderById(token, id)
       .then((response) => {
         setOrder(response.data); // Set the order data
       })

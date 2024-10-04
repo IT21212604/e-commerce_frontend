@@ -7,11 +7,12 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import './OrderList.css';
 
 function OrderList() {
+  const [token, settoken] = useState(sessionStorage.getItem("token"));
   const [orders, setOrders] = useState([]);
 
   // Fetch orders when component mounts
   useEffect(() => {
-    Service.getAllOrders()
+    Service.getAllOrders(token)
       .then((response) => {
         setOrders(response.data);
         toast.success("Orders loaded successfully", {
@@ -39,8 +40,27 @@ function OrderList() {
       });
   }, []);
 
-  const markAsDelivered = (orderId) => {
-    Service.markOrderAsDelivered(orderId)
+  const markAsDelivered = (obj) => {
+    // const order = orders.find(order => order.id === orderId);
+    const vendor = obj.vendorStatus[0];
+    const vendorId = obj.orderStatus === "Processing" ?  obj.vendorStatus[0].vendorId : null;// Update this line as per your structure
+
+    if (!vendorId) {
+      toast.error("Vendor ID not found", {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+      });
+      return;
+    }
+
+    const status = "Delivered";
+    Service.markOrderAsDelivered(token, obj.id, vendorId, status)
       .then(() => {
         toast.success("Order marked as delivered", {
           position: "top-right",
@@ -54,7 +74,7 @@ function OrderList() {
         });
         setOrders(
           orders.map((order) =>
-            order.id === orderId ? { ...order, status: "Delivered" } : order
+            order.id === obj.id ? { ...order, orderStatus: status } : order // Update the order status in the UI
           )
         );
       })
@@ -75,7 +95,7 @@ function OrderList() {
   const cancelOrder = (orderId) => {
     const note = prompt("Please enter a note for cancellation");
     if (note) {
-      Service.cancelOrder(orderId, note)
+      Service.cancelOrder(token, orderId, note)
         .then(() => {
           toast.success("Order cancelled successfully", {
             position: "top-right",
@@ -87,7 +107,11 @@ function OrderList() {
             progress: undefined,
             theme: "colored",
           });
-          setOrders(orders.filter((order) => order.id !== orderId));
+          setOrders(
+            orders.map((order) =>
+              order.id === orderId ? { ...order, orderStatus: "Cancelled" } : order // Change the status to "Cancelled"
+            )
+          );
         })
         .catch(() => {
           toast.error("Failed to cancel order", {
@@ -135,26 +159,23 @@ function OrderList() {
                   )) || <span>No vendor status available</span>}
                 </td>
                 <td className="btn-group">
-                  {/* Updated Link to pass order id */}
                   <Link to={`/orderDetail/${order.id}`} className="btn btn-primary btn-sm order-list-btn order-list-btn-primary">
                     View
                   </Link>
-                  {order.status !== "Delivered" && (
-                    <>
-                      <button
-                        className="btn btn-success btn-sm order-list-btn order-list-btn-success"
-                        onClick={() => markAsDelivered(order.id)}
-                      >
-                        Delivered
-                      </button>
-                      <button
-                        className="btn btn-danger btn-sm order-list-btn "
-                        onClick={() => cancelOrder(order.id)}
-                      >
-                        Cancel
-                      </button>
-                    </>
-                  )}
+                  <button
+                    className="btn btn-success btn-sm order-list-btn order-list-btn-success"
+                    onClick={() => markAsDelivered(order)} // Pass only orderId
+                    disabled={order.orderStatus === "Delivered" || order.orderStatus === "Cancelled"} // Disable button if order is delivered
+                  >
+                    Delivered
+                  </button>
+                  <button
+                    className="btn btn-danger btn-sm order-list-btn"
+                    onClick={() => cancelOrder(order.id)}
+                    disabled={order.orderStatus === "Cancelled" || order.orderStatus === "Delivered"} // Disable button if order is cancelled
+                  >
+                    Cancel
+                  </button>
                 </td>
               </tr>
             ))
