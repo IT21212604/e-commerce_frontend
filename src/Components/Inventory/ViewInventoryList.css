@@ -1,0 +1,40 @@
+.inventory-details-container {
+    margin: 20px auto;
+    padding: 20px;
+    max-width: 90%;
+    background-color: #f9f9f9;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .inventory-table {
+    background-color: #fff;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  }
+  
+  .inventory-table th,
+  .inventory-table td {
+    vertical-align: middle;
+    text-align: center;
+  }
+  
+  .table-dark th {
+    background-color: #343a40 !important;
+    color: #fff;
+  }
+  
+  .badge {
+    font-size: 0.9rem;
+    padding: 0.5rem;
+  }
+  
+  .badge.bg-danger {
+    background-color: #dc3545;
+  }
+  
+  .badge.bg-success {
+    background-color: #28a745;
+  }
+  
