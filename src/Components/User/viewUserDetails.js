@@ -7,6 +7,7 @@ import "./ViewUserDetails.css";
 import Service from "../../Services/Service"; // Import the service to get users
 
 function ViewUserDetails() {
+  const [token, settoken] = useState(sessionStorage.getItem("token"));
   const [users, setUsers] = useState([]);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [showModal, setShowModal] = useState(false); // Modal visibility state
@@ -20,7 +21,7 @@ function ViewUserDetails() {
 
   // Fetch users on component mount
   useEffect(() => {
-    Service.getUsers() // Call the Service to fetch users
+    Service.getUsers(token) // Call the Service to fetch users
       .then((response) => {
         const usersData = response.data; // Adjust this based on the API response structure
         
@@ -79,7 +80,7 @@ function ViewUserDetails() {
   const activateUser = () => {
     if (!selectedUserId) return;
 
-    Service.activateUser(selectedUserId)
+    Service.activateUser(token, selectedUserId)
       .then((response) => {
         toast.success("User activated successfully", {
           position: "top-right",

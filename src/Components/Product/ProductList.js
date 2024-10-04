@@ -341,6 +341,14 @@
 
 // export default ProductList;
 
+
+
+
+
+
+
+
+
 // ProductList.js
 
 import React, { useEffect, useState } from "react";
@@ -352,6 +360,7 @@ import Service from "../../Services/Service"; // Import the Service class for AP
 import "./ProductList.css";
 
 function ProductList() {
+  const [token, settoken] = useState(sessionStorage.getItem("token"));
   const [products, setProducts] = useState([]);
   const [filteredProducts, setFilteredProducts] = useState([]);
   const [categories, setCategories] = useState([]); // For category filter
@@ -369,7 +378,7 @@ function ProductList() {
 
   useEffect(() => {
     // Fetch all products
-    Service.getAllProductList()
+    Service.getAllProductList(token)
       .then((res) => {
         setProducts(res.data);
         setFilteredProducts(res.data);
@@ -402,7 +411,7 @@ function ProductList() {
   const fetchVendors = async (vendorIds) => {
     try {
       const vendorData = await Promise.all(
-        vendorIds.map((id) => Service.getUserById(id).then((res) => res.data))
+        vendorIds.map((id) => Service.getUserById(token, id).then((res) => res.data))
       );
       setVendors(vendorData);
     } catch (error) {
@@ -460,6 +469,7 @@ function ProductList() {
     }
 
     Service.updateProductsStatusByVendorAndCategory(
+      token,
       selectedVendor,
       selectedCategory,
       status
@@ -485,7 +495,7 @@ function ProductList() {
 
   // Function to update status of individual products
   const updateIndividualProductStatus = (id, status) => {
-    Service.updateProductStatusById(id, status)
+    Service.updateProductStatusById(token, id, status)
       .then(() => {
         toast.success(`Product status updated to ${status}.`, {
           theme: "colored",

@@ -17,6 +17,7 @@ function AddProduct() {
     status: 'active', // Default status
   });
   
+  const [token, settoken] = useState(sessionStorage.getItem("token"));
   const [categories, setCategories] = useState([]); // State for categories
   const [vendors, setVendors] = useState([]); // State for vendors
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
@@ -30,14 +31,14 @@ function AddProduct() {
     const fetchData = async () => {
       try {
         // Fetch all products to get unique categories
-        const productResponse = await Service.getAllProductList();
+        const productResponse = await Service.getAllProductList(token);
         const uniqueCategories = [
           ...new Set(productResponse.data.map((product) => product.category)),
         ];
         setCategories(uniqueCategories);
 
         // Fetch all users to get vendors
-        const usersResponse = await Service.getUsers();
+        const usersResponse = await Service.getUsers(token);
         console.log(usersResponse)
         const vendorUsers = usersResponse.data.filter(user => user.userType === 'Vendor'); // Filter for vendor role
         setVendors(vendorUsers);
@@ -83,7 +84,7 @@ function AddProduct() {
 
     try {
       // Call the service to add the product
-      const response = await Service.addProduct(productData);
+      const response = await Service.addProduct(token, productData);
 
       if (response.status === 200 || response.status === 201) {
         toast.success("Product added successfully!", { theme: "colored" });
@@ -121,7 +122,7 @@ function AddProduct() {
               {/* Left Column */}
               <div className="col-md-6">
                 <div className="mb-3">
-                  <label className="form-label">Product ID</label>
+                  <label className="form-label">Product Code</label>
                   <input
                     type="text"
                     className="form-control"
