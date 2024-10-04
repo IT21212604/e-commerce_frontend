@@ -23,167 +23,179 @@ class Service {
   }
 
    // Function to get users
-   getUsers() { //token
-    // const config = {
-    //     headers: { 
-    //         'Access-Control-Allow-Origin': "*", 
-    //         'Authorization': 'Bearer ' + token 
-    //     }
-    // }
+   getUsers(token) { //token
+    const config = {
+        headers: { 
+            // 'Access-Control-Allow-Origin': "*", 
+            'Authorization': 'Bearer ' + token 
+        }
+    }
 
-    return axios.get(`${API_BASE_URL}/User`);
+    return axios.get(`${API_BASE_URL}/User`, config);
   }
 
   // Function to get users
-  getUserById(id) { //token
-    // const config = {
-    //     headers: { 
-    //         'Access-Control-Allow-Origin': "*", 
-    //         'Authorization': 'Bearer ' + token 
-    //     }
-    // }
+  getUserById(token, id) { //token
+    const config = {
+        headers: { 
+            // 'Access-Control-Allow-Origin': "*", 
+            'Authorization': 'Bearer ' + token 
+        }
+    }
 
-    return axios.get(`${API_BASE_URL}/User/${id}`);
+    return axios.get(`${API_BASE_URL}/User/${id}`, config);
   }
 
-  activateUser(id){ //token, id, formData
-    // const config = {
-    //     headers: { 
-    //         'Access-Control-Allow-Origin': "*", 
-    //         'Authorization': 'Bearer ' + token 
-    //     }
-    // }
+  activateUser(token, id){ //token, id, formData
+    const config = {
+        headers: { 
+            'Access-Control-Allow-Origin': "*", 
+            'Authorization': 'Bearer ' + token 
+        }
+    }
 
-    return axios.put(`${API_BASE_URL}/User/activeUser/${id}?status=Active`);
+    return axios.put(`${API_BASE_URL}/User/activeUser/${id}?status=Active`, null,config);
   }
 
 
   // Method to add a Product  GetProductById
-  addProduct(formData) {
-    // const config = {
-    //     headers: { 
-    //         'Access-Control-Allow-Origin': "*", 
-    //         'Authorization': 'Bearer ' + token 
-    //     }
-    // }
+  addProduct(token, formData) {
+    const config = {
+        headers: { 
+            // 'Access-Control-Allow-Origin': "*", 
+            'Authorization': 'Bearer ' + token 
+        }
+    }
 
-    return axios.post(`${API_BASE_URL}/Product/AddProduct`, formData);
+    return axios.post(`${API_BASE_URL}/Product/AddProduct`, formData, config);
   }
 
   // Method to get a Product  
-  getProductById(id) { //token, id
-    // const config = {
-    //     headers: { 
-    //         'Access-Control-Allow-Origin': "*", 
-    //         'Authorization': 'Bearer ' + token 
-    //     }
-    // }
+  getProductById(token, id) { //token, id
+    const config = {
+        headers: { 
+            // 'Access-Control-Allow-Origin': "*", 
+            'Authorization': 'Bearer ' + token 
+        }
+    }
 
-    return axios.get(`${API_BASE_URL}/Product/GetProductById/${id}`);
+    return axios.get(`${API_BASE_URL}/Product/GetProductById/${id}`, config);
   }
 
-  getAllProductList(){ //token
-    // const config = {
-    //     headers: { 
-    //         'Access-Control-Allow-Origin': "*", 
-    //         'Authorization': 'Bearer ' + token 
-    //     }
-    // }
+  getAllProductList(token){ //token
+    const config = {
+        headers: { 
+            // 'Access-Control-Allow-Origin': "*", 
+            'Authorization': 'Bearer ' + token 
+        }
+    }
 
-    return axios.get(`${API_BASE_URL}/Product/GetAllProductList`);
+    return axios.get(`${API_BASE_URL}/Product/GetAllProductList`, config);
   }
 
-  updateProductById(id, formData){ //token, id, formData
-    // const config = {
-    //     headers: { 
-    //         'Access-Control-Allow-Origin': "*", 
-    //         'Authorization': 'Bearer ' + token 
-    //     }
-    // }
+  updateProductById(token, id, formData){ //token, id, formData
+    const config = {
+        headers: { 
+            // 'Access-Control-Allow-Origin': "*", 
+            'Authorization': 'Bearer ' + token 
+        }
+    }
 
-    return axios.put(`${API_BASE_URL}/Product/UpdateProductById/${id}`, formData);
+    return axios.put(`${API_BASE_URL}/Product/UpdateProductById/${id}`, formData, config);
   }
 
-  removeProductById(id){//token, id
-    // const config = {
-    //     headers: { 
-    //         'Access-Control-Allow-Origin': "*", 
-    //         'Authorization': 'Bearer ' + token 
-    //     }
-    // }
+  removeProductById(token, id){//token, id
+    const config = {
+        headers: { 
+            // 'Access-Control-Allow-Origin': "*", 
+            'Authorization': 'Bearer ' + token 
+        }
+    }
 
-    return axios.delete(`${API_BASE_URL}/Product/RemoveProductById/${id}`); //config
+    return axios.delete(`${API_BASE_URL}/Product/RemoveProductById/${id}`, config); //config
   }
 
-  updateProductStatusById(id, status){
-    // const config = {
-    //     headers: { 
-    //         'Access-Control-Allow-Origin': "*", 
-    //         'Authorization': 'Bearer ' + token 
-    //     }
-    // }
+  updateProductStatusById(token, id, status){
+    const config = {
+        headers: { 
+            // 'Access-Control-Allow-Origin': "*", 
+            'Authorization': 'Bearer ' + token 
+        }
+    }
 
-    return axios.put(`${API_BASE_URL}/Product/UpdateProductStatusById/${id}?status=${status}`); //config
+    return axios.put(`${API_BASE_URL}/Product/UpdateProductStatusById/${id}?status=${status}`, null, config); //config
   }
 
-  updateProductsStatusByVendorAndCategory(vendorId, category, status){
-    // const config = {
-    //     headers: { 
-    //         'Access-Control-Allow-Origin': "*", 
-    //         'Authorization': 'Bearer ' + token 
-    //     }
-    // }
+  updateProductsStatusByVendorAndCategory(token, vendorId, category, status){
+    const config = {
+        headers: { 
+            // 'Access-Control-Allow-Origin': "*", 
+            'Authorization': 'Bearer ' + token 
+        }
+    }
 
     return axios.put(`${API_BASE_URL}/Product/UpdateProductsStatusByVendorAndCategory?vendorId=${vendorId}&category=${category}&status=${status}`
-    ); //config
+    ,null ,config); //config
   }
 
    // Function to get all orders
-   getAllOrders() { //token
-    // const config = {
-    //     headers: { 
-    //         'Access-Control-Allow-Origin': "*", 
-    //         'Authorization': 'Bearer ' + token 
-    //     }
-    // }
+   getAllOrders(token) { //token
+    const config = {
+        headers: { 
+            // 'Access-Control-Allow-Origin': "*", 
+            'Authorization': 'Bearer ' + token 
+        }
+    }
 
-    return axios.get(`${API_BASE_URL}/Orders`);  
+    return axios.get(`${API_BASE_URL}/Orders`, config);  
   }
 
   // Method to get a Order  
-  getOrderById(id) { //token, id
-    // const config = {
-    //     headers: { 
-    //         'Access-Control-Allow-Origin': "*", 
-    //         'Authorization': 'Bearer ' + token 
-    //     }
-    // }
+  getOrderById(token, id) { //token, id
+    const config = {
+        headers: { 
+            // 'Access-Control-Allow-Origin': "*", 
+            'Authorization': 'Bearer ' + token 
+        }
+    }
 
-    return axios.get(`${API_BASE_URL}/Orders/${id}`);
+    return axios.get(`${API_BASE_URL}/Orders/${id}`, config);
   }
 
   // Method to Confirm Canceling Order  
-  cancelOrder(id) { //token, id
-    // const config = {
-    //     headers: { 
-    //         'Access-Control-Allow-Origin': "*", 
-    //         'Authorization': 'Bearer ' + token 
-    //     }
-    // }
+  cancelOrder(token, id) { //token, id
+    const config = {
+        headers: { 
+            // 'Access-Control-Allow-Origin': "*", 
+            'Authorization': 'Bearer ' + token 
+        }
+    }
 
-    return axios.patch(`${API_BASE_URL}/Orders/confirm-cancel/${id}`);
+    return axios.patch(`${API_BASE_URL}/Orders/confirm-cancel/${id}`, config);
   }
 
   // Method to Mark as Delivered  
-  markOrderAsDelivered(id) { //token, id
-    // const config = {
-    //     headers: { 
-    //         'Access-Control-Allow-Origin': "*", 
-    //         'Authorization': 'Bearer ' + token 
-    //     }
-    // }
+  markOrderAsDelivered(token, id, vendorId, status) { //token, id
+    const config = {
+        headers: { 
+            // 'Access-Control-Allow-Origin': "*", 
+            'Authorization': 'Bearer ' + token 
+        }
+    }
 
-    return axios.patch(`${API_BASE_URL}/Orders/deliver/${id}`);
+    return axios.patch(`${API_BASE_URL}/Orders/deliver/${id}?vendorId=${vendorId}&status=${status}`, null, config);
+  }
+
+  // Add new method to send notifications
+  sendNotification(token, userId, message) {
+    const config = {
+      headers: {
+        //"Access-Control-Allow-Origin": "*",
+        Authorization: "Bearer " + token,
+      },
+    };
+
+    return axios.post(`${API_BASE_URL}/Notification`, { userId, message }, config);
   }
 
 }

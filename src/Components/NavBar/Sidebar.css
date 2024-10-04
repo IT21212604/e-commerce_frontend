@@ -1,4 +1,3 @@
-/* Sidebar.css */
 .sidebar {
   background-color: #1c2331;
   width: 250px;
@@ -17,9 +16,9 @@
 
 .sidebar.open {
   left: 0; /* When open, slide in */
+  /* margin-top: 5px; */
 }
 
-/* Sidebar content styling */
 .sidebar-logo {
   color: #fff;
   text-align: center;
@@ -84,6 +83,16 @@
 .sidebar-menu li a:hover {
   background-color: #1abc9c;
   color: #fff;
+}
+
+.sidebar-menu li.disabled a.disabled-link {
+  pointer-events: none; /* Disable click */
+  color: #b0bec5; /* Disabled color */
+  background-color: #2d343f; /* Different background for disabled links */
+}
+
+.sidebar-menu li.disabled a.disabled-link:hover {
+  background-color: #2a354a; /* Prevent hover effect on disabled links */
 }
 
 .active a {

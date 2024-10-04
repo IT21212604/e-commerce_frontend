@@ -1,20 +1,27 @@
 import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBars } from '@fortawesome/free-solid-svg-icons';
-import { useNavigate } from 'react-router-dom'; // Import useNavigate from react-router-dom
-import './Header.css'; // Import the CSS file for styling
+import { useNavigate } from 'react-router-dom'; 
+import './Header.css';
 
-const Header = ({ toggleSidebar }) => {
-  const navigate = useNavigate(); // Initialize useNavigate hook
+const Header = ({ toggleSidebar, isLoggedIn }) => {
+  const navigate = useNavigate(); 
 
-  // Function to handle navigation to login page
   const handleLogin = () => {
-    navigate('/login'); // Navigate to the login page
+    navigate('/login'); 
   };
 
-  // Function to handle navigation to signup page
   const handleSignUp = () => {
-    navigate('/register'); // Navigate to the signup page
+    navigate('/register'); 
+  };
+
+  const handleLogout = () => {
+    // Clear token from local storage or session storage
+    localStorage.removeItem('token');
+    sessionStorage.removeItem('token');
+  
+    // Redirect user to the login page
+    window.location.href = '/login';
   };
 
   return (
@@ -28,12 +35,20 @@ const Header = ({ toggleSidebar }) => {
       </div>
       <h1 className="app-title"></h1>
       <div className="auth-buttons">
-        <button className="btn btn-primary" onClick={handleLogin}>
-          Login
-        </button>
-        <button className="btn btn-secondary" onClick={handleSignUp}>
-          Sign Up
-        </button>
+        {!isLoggedIn ? (
+          <>
+            <button className="btn btn-primary" onClick={handleLogin}>
+              Login
+            </button>
+            <button className="btn btn-secondary" onClick={handleSignUp}>
+              Sign Up
+            </button>
+          </>
+        ) : (
+          <button className="btn btn-secondary" onClick={handleLogout}>
+            Logout
+          </button>
+        )}
       </div>
     </header>
   );

@@ -3,26 +3,25 @@ import './Sidebar.css'; // Import the CSS file for styling
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch, faTachometerAlt, faTag, faBoxOpen, faBullhorn, faChartLine, faMoneyBillAlt, faFileImport, faUserCircle } from '@fortawesome/free-solid-svg-icons'; // Import icons
 
-const Sidebar = ({ isOpen }) => {
+const Sidebar = ({ isOpen, user }) => {
   // State for search input
   const [searchTerm, setSearchTerm] = useState('');
 
-  // Menu items data
+  // Define menu items with role-based permissions
   const menuItems = [
-    { name: 'Dashboard', icon: faTachometerAlt, link: '#' },
-    { name: 'User Details', icon: faUserCircle, link: '/viewUser' },
-    { name: 'Order Details', icon: faTag, link: '/orderList' },
-    { name: 'Product Details', icon: faBoxOpen, link: '/productList' }, // Updated link to ProductList.js
-    { name: 'Promotions', icon: faBullhorn, link: '#' },
-    { name: 'Reports', icon: faChartLine, link: '#' },
-    { name: 'Inventory', icon: faMoneyBillAlt, link: '#' },
-    { name: 'Super XML Import', icon: faFileImport, link: '#' },
+    { name: 'Dashboard', icon: faTachometerAlt, link: '#', roles: ['Administrator', 'Vendor', 'CSR'] },
+    { name: 'User Details', icon: faUserCircle, link: '/viewUser', roles: ['Administrator'] }, // Admin only
+    { name: 'Order Details', icon: faTag, link: '/orderList', roles: ['Administrator', 'CSR', 'Vendor'] },
+    { name: 'Activation/Deactivation Products', icon: faBoxOpen, link: '/ProductList', roles: ['Administrator'] }, 
+    { name: 'Product Details', icon: faBullhorn, link: '/productDetails', roles: ['Vendor'] }, // Vendor only
+    { name: 'Reports', icon: faChartLine, link: '#', roles: ['Administrator'] }, // Admin only
+    { name: 'Inventory', icon: faMoneyBillAlt, link: '/viewInventory', roles: ['Administrator'] }, // Admin only
+    { name: 'Super XML Import', icon: faFileImport, link: '#', roles: ['Administrator'] }, // Admin only
   ];
 
   // Filter the menu items based on the search term
-  const filteredItems = menuItems.filter(item =>
-    item.name.toLowerCase().includes(searchTerm.toLowerCase())
-  );
+  const filteredItems = menuItems
+    .filter(item => item.name.toLowerCase().includes(searchTerm.toLowerCase()));
 
   return (
     <div className={`sidebar ${isOpen ? 'open' : ''}`}>
@@ -36,14 +35,18 @@ const Sidebar = ({ isOpen }) => {
         <FontAwesomeIcon icon={faSearch} className="search-icon" />
       </div>
       <ul className="sidebar-menu">
-        {filteredItems.map((item, index) => (
-          <li key={index}>
-            <a href={item.link}>
-              <FontAwesomeIcon icon={item.icon} />
-              {item.name}
-            </a>
-          </li>
-        ))}
+        {filteredItems.map((item, index) => {
+          const isAuthorized = user && item.roles.includes(user.role);
+
+          return (
+            <li key={index} className={isAuthorized ? '' : 'disabled'}>
+              <a href={isAuthorized ? item.link : '#'} className={isAuthorized ? '' : 'disabled-link'}>
+                <FontAwesomeIcon icon={item.icon} />
+                {item.name}
+              </a>
+            </li>
+          );
+        })}
       </ul>
     </div>
   );

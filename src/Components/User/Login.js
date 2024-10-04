@@ -9,7 +9,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faGoogle, faFacebook } from "@fortawesome/free-brands-svg-icons";
 import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons"; // Import show/hide icons
 
-function Login() {
+function Login({ setUser }) {
   const navigate = useNavigate(); 
 
   const [email, setEmail] = useState("");
@@ -45,11 +45,22 @@ function Login() {
     Service.login(email, password)
       .then((res) => {
         console.log("API Response:", res); 
-        console.log(res.data.accessToken)
         if (res.status === 200 && res.data.token != null) {
           sessionStorage.setItem("token", res.data.token);
           sessionStorage.setItem("isLogged", true);
-          navigate("/add-product");
+          
+          // Decode the token to get user data
+          const userData = JSON.parse(atob(res.data.token.split('.')[1]));
+          setUser(userData); // Update user state with role
+          
+          // Redirect to the correct page based on role
+          if (userData.role === 'Administrator') {
+            navigate("/viewUser");
+          } else if (userData.role === 'Vendor') {
+            navigate("/productDetails");
+          } else {
+            navigate("/orderList"); // Default to orderList for CSR
+          }
         } else {
           toast.error("Login failed!! Please try again.", {
             position: "top-right",
@@ -88,11 +99,7 @@ function Login() {
       <Sidebar isOpen={isSidebarOpen} toggleSidebar={toggleSidebar} />
       <ToastContainer />
 
-      <div
-        className={`login-container container mt-5 ${
-          isSidebarOpen ? "with-sidebar" : ""
-        }`}
-      >
+      <div className={`login-container container mt-5 ${isSidebarOpen ? "with-sidebar" : ""}`}>
         <div className="login-form shadow-lg p-5 rounded">
           <h2 className="text-center mb-4">Login</h2>
           <form onSubmit={handleAuthenticate}>
