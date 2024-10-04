@@ -15,16 +15,16 @@ function OrderList() {
     Service.getAllOrders(token)
       .then((response) => {
         setOrders(response.data);
-        toast.success("Orders loaded successfully", {
-          position: "top-right",
-          autoClose: 3000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "colored",
-        });
+        // toast.success("Orders loaded successfully", {
+        //   position: "top-right",
+        //   autoClose: 3000,
+        //   hideProgressBar: false,
+        //   closeOnClick: true,
+        //   pauseOnHover: true,
+        //   draggable: true,
+        //   progress: undefined,
+        //   theme: "colored",
+        // });
       })
       .catch((error) => {
         toast.error("Failed to fetch orders", {

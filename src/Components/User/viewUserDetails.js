@@ -27,16 +27,16 @@ function ViewUserDetails() {
         
         if (Array.isArray(usersData)) {
           setUsers(usersData); // Set fetched users to state if it's an array
-          toast.success("User data loaded successfully", {
-            position: "top-right",
-            autoClose: 3000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "colored",
-          });
+          // toast.success("User data loaded successfully", {
+          //   position: "top-right",
+          //   autoClose: 3000,
+          //   hideProgressBar: false,
+          //   closeOnClick: true,
+          //   pauseOnHover: true,
+          //   draggable: true,
+          //   progress: undefined,
+          //   theme: "colored",
+          // });
         } else {
           toast.error("Unexpected response format from API", {
             position: "top-right",

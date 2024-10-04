@@ -87,7 +87,7 @@ function AddProduct() {
       const response = await Service.addProduct(token, productData);
 
       if (response.status === 200 || response.status === 201) {
-        toast.success("Product added successfully!", { theme: "colored" });
+        //toast.success("Product added successfully!", { theme: "colored" });
         // Reset the form after successful submission
         setFormData({
           productId: '',
