@@ -17,7 +17,7 @@ function Home() {
       <div className="home-banner-container">
         <div className="home-text-section">
           <h1 className="primary-heading">
-          ClickUp<span style={{color:'red'}}>+</span>
+          Sellforce<span style={{color:'red'}}>+</span>
           </h1>
           <p className="primary-text">
             Manage your employees efficiently with our powerful tools.

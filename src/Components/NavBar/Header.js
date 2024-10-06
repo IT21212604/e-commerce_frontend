@@ -63,7 +63,7 @@ const Header = ({ toggleSidebar, isLoggedIn }) => {
         <FontAwesomeIcon icon={faBars} />
       </div>
       <div className="sidebar-logo">
-        <h2>Sellforce</h2>
+        <h2>Sellforce <span style={{color:'red'}}>+</span></h2>
         <p>Your Sales Solution</p>
       </div>
       <h1 className="app-title"></h1>

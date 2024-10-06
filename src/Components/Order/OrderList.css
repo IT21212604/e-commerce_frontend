@@ -15,7 +15,7 @@
     text-align: center;
     /* text-transform: uppercase; */
     letter-spacing: 1px;
-    padding-top: 50px; /* Ensure spacing from the top (if header overlaps) */
+    padding-top: 20px; /* Ensure spacing from the top (if header overlaps) */
 }
 
 /* Table Styles */
@@ -39,7 +39,7 @@
 
 /* Table Head Styles */
 .order-list-table thead th {
-    background-color: #6f8195;
+    background-color: #6c757d;
     color: #fff;
     font-weight: 700;
     padding: 20px;

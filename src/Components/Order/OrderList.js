@@ -4,18 +4,22 @@ import Service from "../../Services/Service";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "bootstrap/dist/css/bootstrap.min.css";
-import './OrderList.css';
+import { Form, InputGroup } from "react-bootstrap";
+import { FaSearch } from "react-icons/fa"; // Import the search icon
+import "./OrderList.css";
 
 function OrderList() {
   const [token, setToken] = useState(sessionStorage.getItem("token"));
   const [orders, setOrders] = useState([]);
   const [userRole, setUserRole] = useState(""); // State to store the user's role
+  const [searchTerm, setSearchTerm] = useState(""); // State to store the search term
+  const [filteredOrders, setFilteredOrders] = useState([]); // State to store filtered orders
 
   // Extract user role from token
   useEffect(() => {
     const storedToken = sessionStorage.getItem("token");
     if (storedToken) {
-      const userData = JSON.parse(atob(storedToken.split('.')[1])); // Decode JWT token payload
+      const userData = JSON.parse(atob(storedToken.split(".")[1])); // Decode JWT token payload
       setUserRole(userData.role); // Set the user role from the token
     }
   }, []);
@@ -26,6 +30,7 @@ function OrderList() {
       Service.getAllOrders(token)
         .then((response) => {
           setOrders(response.data);
+          setFilteredOrders(response.data); // Initially show all orders
         })
         .catch(() => {
           toast.error("Failed to fetch orders", {
@@ -42,9 +47,21 @@ function OrderList() {
     }
   }, [token]);
 
+  // Filter orders based on the search term
+  useEffect(() => {
+    const lowerCaseSearchTerm = searchTerm.toLowerCase();
+    const filtered = orders.filter(
+      (order) =>
+        order.orderID.toLowerCase().includes(lowerCaseSearchTerm) ||
+        order.customerName.toLowerCase().includes(lowerCaseSearchTerm)
+    );
+    setFilteredOrders(filtered);
+  }, [searchTerm, orders]);
+
   // Mark an order as delivered
   const markAsDelivered = (obj) => {
-    const vendorId = obj.orderStatus === "Processing" ? obj.vendorStatus[0]?.vendorId : null;
+    const vendorId =
+      obj.orderStatus === "Processing" ? obj.vendorStatus[0]?.vendorId : null;
 
     if (!vendorId) {
       toast.error("Vendor ID not found", {
@@ -111,7 +128,9 @@ function OrderList() {
           });
           setOrders(
             orders.map((order) =>
-              order.id === orderId ? { ...order, orderStatus: "Cancelled" } : order
+              order.id === orderId
+                ? { ...order, orderStatus: "Cancelled" }
+                : order
             )
           );
         })
@@ -133,7 +152,21 @@ function OrderList() {
   return (
     <div className="container order-list-container mt-5">
       <ToastContainer />
-      <h2 className="text-center mb-4 order-list-title">Order List</h2>
+      <h2 className="text-center mb-4">Order List</h2>
+
+      {/* Search Bar */}
+      <div className="input-group">
+        <Form.Control
+          type="text"
+          placeholder="Search by Order ID or Name"
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+        />
+        <InputGroup.Text>
+          <FaSearch />
+        </InputGroup.Text>
+      </div>
+
       <table className="table table-bordered table-striped order-list-table">
         <thead>
           <tr>
@@ -146,8 +179,8 @@ function OrderList() {
           </tr>
         </thead>
         <tbody>
-          {orders.length > 0 ? (
-            orders.map((order) => (
+          {filteredOrders.length > 0 ? (
+            filteredOrders.map((order) => (
               <tr key={order.id}>
                 <td>{order.orderID}</td>
                 <td>{order.customerName}</td>

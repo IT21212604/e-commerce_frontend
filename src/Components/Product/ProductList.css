@@ -52,7 +52,7 @@
   padding: 12px; /* Padding in header cells */
   text-align: left; /* Align text to the left */
   font-weight: bold; /* Bold text for emphasis */
-  border-bottom: 2px solid #be5126; /* Darker blue border */
+  /* border-bottom: 2px solid #be5126;  */
 }
 
 /* Table body styling */

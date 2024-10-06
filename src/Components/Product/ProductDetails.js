@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { Modal, Button, Form } from "react-bootstrap";
+import { Modal, Button, Form, InputGroup } from "react-bootstrap";
 import Sidebar from "../NavBar/Sidebar";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { useNavigate } from 'react-router-dom'; // Import useNavigate
+import { useNavigate } from "react-router-dom"; // Import useNavigate
+import { FaSearch } from "react-icons/fa"; // Import the search icon
 import Service from "../../Services/Service";
 import "./ProductDetails.css";
 
@@ -66,16 +67,21 @@ function ProductDetails() {
 
   // Handle the click event for adding a new product
   const handleAddProduct = () => {
-    navigate('/add-product'); // Navigate to Add Product page
+    navigate("/add-product"); // Navigate to Add Product page
   };
 
   const handleSearchChange = (e) => {
     const term = e.target.value;
     setSearchTerm(term);
-    const filtered = products.filter((product) =>
-      product.name.toLowerCase().includes(term.toLowerCase()) ||
-      product.category.toLowerCase().includes(term.toLowerCase()) ||
-      (vendors.find(vendor => vendor.id === product.vendorId)?.name.toLowerCase().includes(term.toLowerCase()))
+    const filtered = products.filter(
+      (product) =>
+        product.name.toLowerCase().includes(term.toLowerCase()) ||
+        product.productId.toLowerCase().includes(term.toLowerCase()) ||
+        product.category.toLowerCase().includes(term.toLowerCase()) ||
+        vendors
+          .find((vendor) => vendor.id === product.vendorId)
+          ?.name.toLowerCase()
+          .includes(term.toLowerCase())
     );
     setFilteredProducts(filtered);
   };
@@ -93,7 +99,9 @@ function ProductDetails() {
           theme: "colored",
         });
         setProducts(products.filter((product) => product.id !== id));
-        setFilteredProducts(filteredProducts.filter((product) => product.id !== id));
+        setFilteredProducts(
+          filteredProducts.filter((product) => product.id !== id)
+        );
         setShowModal(false);
       })
       .catch(() => {
@@ -173,7 +181,8 @@ function ProductDetails() {
                   placeholder="Enter product price"
                   value={selectedProduct?.price || ""}
                   onChange={(e) =>
-                    modalAction === "update" && setSelectedProduct({
+                    modalAction === "update" &&
+                    setSelectedProduct({
                       ...selectedProduct,
                       price: parseFloat(e.target.value),
                     })
@@ -195,11 +204,16 @@ function ProductDetails() {
                 <Form.Control
                   type="text"
                   placeholder="Enter vendor name"
-                  value={vendors.find(vendor => vendor.id === selectedProduct?.vendorId)?.name || ""}
+                  value={
+                    vendors.find(
+                      (vendor) => vendor.id === selectedProduct?.vendorId
+                    )?.name || ""
+                  }
                   onChange={(e) =>
-                    modalAction === "update" && setSelectedProduct({ 
-                      ...selectedProduct, 
-                      vendorId: e.target.value // Adjust according to your data structure
+                    modalAction === "update" &&
+                    setSelectedProduct({
+                      ...selectedProduct,
+                      vendorId: e.target.value, // Adjust according to your data structure
                     })
                   }
                   readOnly // Editable only in Update mode
@@ -236,11 +250,15 @@ function ProductDetails() {
         </Modal.Footer>
       </Modal>
 
-      <div className={`product-list-container container mt-5 ${isSidebarOpen ? "with-sidebar" : ""}`}>
+      <div
+        className={`product-list-container container mt-5 ${
+          isSidebarOpen ? "with-sidebar" : ""
+        }`}
+      >
         <h2 className="text-center mb-4">Product List</h2>
 
         {/* Search Bar */}
-        <div className="mb-3">
+        {/* <div className="mb-3">
           <input
             type="text"
             className="form-control"
@@ -248,12 +266,25 @@ function ProductDetails() {
             value={searchTerm}
             onChange={handleSearchChange}
           />
+        </div> */}
+
+        {/* Search Bar */}
+        <div className="input-group">
+          <Form.Control
+            type="text"
+            placeholder="Search by name, category, or vendor name..."
+            value={searchTerm}
+            onChange={handleSearchChange}
+          />
+          <InputGroup.Text>
+            <FaSearch />
+          </InputGroup.Text>
         </div>
 
         {/* Add Product Button */}
-      <button onClick={handleAddProduct} className="btn btn-primary mb-3">
-        Add Product
-      </button>
+        <button onClick={handleAddProduct} className="btn btn-primary mb-3">
+          Add Product
+        </button>
 
         {/* Product Table */}
         <table className="table table-bordered table-striped table-header">
@@ -277,7 +308,8 @@ function ProductDetails() {
                 <td>{product.price}</td>
                 <td>{product.status}</td>
                 <td>
-                  {vendors.find((vendor) => vendor.id === product.vendorId)?.name || "Unknown Vendor"}
+                  {vendors.find((vendor) => vendor.id === product.vendorId)
+                    ?.name || "Unknown Vendor"}
                 </td>
                 <td>
                   <Button

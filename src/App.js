@@ -63,6 +63,7 @@ function App() {
                   <>
                     <Route path="/viewUser" element={<ViewUserDetails />} />
                     <Route path="/orderList" element={<OrderList />} />
+                    <Route path="/orderDetail/:id" element={<OrderDetail />} />
                     <Route path="/ProductList" element={<ProductList />} />
                     <Route path="/viewInventory" element={<ViewInventoryList />} />
                   </>
@@ -72,6 +73,7 @@ function App() {
                     <Route path="/productDetails" element={<ProductDetails />} />
                     <Route path="/add-product" element={<AddProduct />} />
                     <Route path="/orderList" element={<OrderList />} />
+                    <Route path="/orderDetail/:id" element={<OrderDetail />} />
                   </>
                 )}
                 {(user.role === 'Administrator' || user.role === 'CSR') && (
