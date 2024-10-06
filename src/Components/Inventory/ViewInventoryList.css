@@ -1,40 +1,34 @@
-.inventory-details-container {
-    margin: 20px auto;
-    padding: 20px;
-    max-width: 90%;
-    background-color: #f9f9f9;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  }
-  
-  .inventory-table {
-    background-color: #fff;
-    border-radius: 8px;
-    overflow: hidden;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-  }
-  
-  .inventory-table th,
-  .inventory-table td {
-    vertical-align: middle;
-    text-align: center;
-  }
-  
-  .table-dark th {
-    background-color: #343a40 !important;
-    color: #fff;
-  }
-  
-  .badge {
-    font-size: 0.9rem;
-    padding: 0.5rem;
-  }
-  
-  .badge.bg-danger {
-    background-color: #dc3545;
-  }
-  
-  .badge.bg-success {
-    background-color: #28a745;
-  }
-  
+.inventory-list-container {
+  padding: 20px;
+}
+
+.table-header th {
+  background-color: #6c757d;
+  color: white;
+  text-align: center;
+}
+
+.table td, .table th {
+  padding: 12px;
+  text-align: center;
+}
+
+.table-striped tbody tr:nth-of-type(odd) {
+  background-color: rgba(0, 0, 0, 0.05);
+}
+
+.table td {
+  vertical-align: middle;
+}
+
+.table td:last-child {
+  color: #28a745; /* Green color for stock updates */
+}
+
+.table td:nth-child(4) {
+  font-weight: bold;
+}
+
+.with-sidebar {
+  margin-left: 250px; /* Adjust if sidebar has a fixed width */
+}
