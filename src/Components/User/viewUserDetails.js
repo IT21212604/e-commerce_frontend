@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
-import { Modal, Button } from 'react-bootstrap'; // Import Modal and Button from react-bootstrap
+import { Modal, Button } from "react-bootstrap"; // Import Modal and Button from react-bootstrap
 import Sidebar from "../NavBar/Sidebar";
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import "./ViewUserDetails.css";
 import Service from "../../Services/Service"; // Import the service to get users
 
@@ -27,16 +27,6 @@ function ViewUserDetails() {
         
         if (Array.isArray(usersData)) {
           setUsers(usersData); // Set fetched users to state if it's an array
-          // toast.success("User data loaded successfully", {
-          //   position: "top-right",
-          //   autoClose: 3000,
-          //   hideProgressBar: false,
-          //   closeOnClick: true,
-          //   pauseOnHover: true,
-          //   draggable: true,
-          //   progress: undefined,
-          //   theme: "colored",
-          // });
         } else {
           toast.error("Unexpected response format from API", {
             position: "top-right",
@@ -94,7 +84,7 @@ function ViewUserDetails() {
         });
 
         // Update the user's status in the local state
-        setUsers(users.map(user => 
+        setUsers(users.map(user =>
           user.id === selectedUserId ? { ...user, status: "Active" } : user
         ));
         handleCloseModal(); // Close the modal after activation
@@ -122,7 +112,8 @@ function ViewUserDetails() {
 
   // Filtered users based on search term
   const filteredUsers = users.filter(user =>
-    user.userType.toLowerCase().includes(searchTerm.toLowerCase())
+    user.userType.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    user.email.toLowerCase().includes(searchTerm.toLowerCase()) // Include email search
   );
 
   return (
@@ -140,7 +131,7 @@ function ViewUserDetails() {
               <input 
                 type="text" 
                 className="form-control" 
-                placeholder="Search by user type" 
+                placeholder="Search by user type or email" 
                 value={searchTerm} 
                 onChange={handleSearchChange} 
               />

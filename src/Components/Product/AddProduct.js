@@ -4,6 +4,7 @@ import './AddProduct.css'; // Import custom CSS for styling
 import { ToastContainer, toast } from 'react-toastify'; // Import Toast for notifications
 import 'react-toastify/dist/ReactToastify.css'; // Import Toast CSS
 import Service from '../../Services/Service'; // Import the Service class for API calls
+import { useNavigate, Link } from "react-router-dom";
 
 function AddProduct() {
   const [formData, setFormData] = useState({
@@ -16,6 +17,8 @@ function AddProduct() {
     stockQuantity: 0,
     status: 'active', // Default status
   });
+
+  const navigate = useNavigate();
   
   const [token, settoken] = useState(sessionStorage.getItem("token"));
   const [categories, setCategories] = useState([]); // State for categories
@@ -87,7 +90,7 @@ function AddProduct() {
       const response = await Service.addProduct(token, productData);
 
       if (response.status === 200 || response.status === 201) {
-        //toast.success("Product added successfully!", { theme: "colored" });
+        toast.success("Product added successfully!", { theme: "colored" });
         // Reset the form after successful submission
         setFormData({
           productId: '',
@@ -97,8 +100,9 @@ function AddProduct() {
           price: 0,
           description: '',
           stockQuantity: 0,
-          status: 'active', // Reset status to default
+          status: 'Active', // Reset status to default
         });
+        navigate("/productDetails");
       }
     } catch (error) {
       console.error("Error adding product:", error.response?.data || error.message);

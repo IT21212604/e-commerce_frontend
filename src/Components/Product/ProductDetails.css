@@ -25,3 +25,8 @@
 .btn {
     min-width: 70px;
 }
+
+.text-left {
+    text-align: left; /* Aligns text to the left */
+    margin-bottom: 20px; /* Optional: Adjusts spacing below the button */
+}

@@ -13,7 +13,7 @@
     color: #343a40;
     margin-bottom: 30px;
     text-align: center;
-    text-transform: uppercase;
+    /* text-transform: uppercase; */
     letter-spacing: 1px;
     padding-top: 50px; /* Ensure spacing from the top (if header overlaps) */
 }
@@ -24,7 +24,7 @@
     margin-bottom: 1rem;
     color: #212529;
     background-color: #f8f9fa;
-    border-radius: 10px;
+    /* border-radius: 10px; */
     overflow: hidden;
 }
 
@@ -41,8 +41,7 @@
 .order-list-table thead th {
     background-color: #6f8195;
     color: #fff;
-    font-weight: 600;
-    text-transform: uppercase;
+    font-weight: 700;
     padding: 20px;
 }
 

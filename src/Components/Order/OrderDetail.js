@@ -35,7 +35,7 @@ function OrderDetail() {
       <ToastContainer />
       {order ? (
         <>
-          <h2 className="order-detail-section-title mb-4">Order Details (ID: {order.id})</h2>
+          <h2 className="order-detail-section-title mb-4">Order Details (ID: {order.orderID})</h2>
           <div className="order-detail-info row mb-3">
             <div className="col-md-6">
               <h5 className="order-detail-sub-title">Order Information</h5>

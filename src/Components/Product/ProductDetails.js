@@ -202,7 +202,7 @@ function ProductDetails() {
                       vendorId: e.target.value // Adjust according to your data structure
                     })
                   }
-                  readOnly={modalAction !== "update"} // Editable only in Update mode
+                  readOnly // Editable only in Update mode
                 />
               </Form.Group>
             </Form>

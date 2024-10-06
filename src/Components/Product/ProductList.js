@@ -604,7 +604,7 @@ function ProductList() {
             className="btn btn-success me-2" // Add a right margin for spacing
             disabled={allActive} // Disable if all products are active
             onClick={() =>
-              showConfirmationModal(() => updateProductStatus("active"))
+              showConfirmationModal(() => updateProductStatus("Active"))
             }
           >
             Activate All
@@ -613,7 +613,7 @@ function ProductList() {
             className="btn btn-danger"
             disabled={allInactive} // Disable if all products are inactive
             onClick={() =>
-              showConfirmationModal(() => updateProductStatus("inactive"))
+              showConfirmationModal(() => updateProductStatus("Inactive"))
             }
           >
             Deactivate All
@@ -624,7 +624,7 @@ function ProductList() {
         <table className="table table-bordered table-striped table-header">
           <thead>
             <tr>
-              <th>Product ID</th>
+              <th>Product Code</th>
               <th>Name</th>
               <th>Category</th>
               <th>Price</th>
@@ -648,12 +648,12 @@ function ProductList() {
                   </td>{" "}
                   {/* Show vendor name */}
                   <td>
-                    {product.status === "inactive" ? (
+                    {product.status === "Inactive" ? (
                       <button
                         className="btn btn-success btn-sm"
                         onClick={() =>
                           showConfirmationModal(() =>
-                            updateIndividualProductStatus(product.id, "active")
+                            updateIndividualProductStatus(product.id, "Active")
                           )
                         }
                       >
@@ -666,7 +666,7 @@ function ProductList() {
                           showConfirmationModal(() =>
                             updateIndividualProductStatus(
                               product.id,
-                              "inactive"
+                              "Inactive"
                             )
                           )
                         }

@@ -7,43 +7,44 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import './OrderList.css';
 
 function OrderList() {
-  const [token, settoken] = useState(sessionStorage.getItem("token"));
+  const [token, setToken] = useState(sessionStorage.getItem("token"));
   const [orders, setOrders] = useState([]);
+  const [userRole, setUserRole] = useState(""); // State to store the user's role
 
-  // Fetch orders when component mounts
+  // Extract user role from token
   useEffect(() => {
-    Service.getAllOrders(token)
-      .then((response) => {
-        setOrders(response.data);
-        // toast.success("Orders loaded successfully", {
-        //   position: "top-right",
-        //   autoClose: 3000,
-        //   hideProgressBar: false,
-        //   closeOnClick: true,
-        //   pauseOnHover: true,
-        //   draggable: true,
-        //   progress: undefined,
-        //   theme: "colored",
-        // });
-      })
-      .catch((error) => {
-        toast.error("Failed to fetch orders", {
-          position: "top-right",
-          autoClose: 3000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "colored",
-        });
-      });
+    const storedToken = sessionStorage.getItem("token");
+    if (storedToken) {
+      const userData = JSON.parse(atob(storedToken.split('.')[1])); // Decode JWT token payload
+      setUserRole(userData.role); // Set the user role from the token
+    }
   }, []);
 
+  // Fetch orders when the component mounts
+  useEffect(() => {
+    if (token) {
+      Service.getAllOrders(token)
+        .then((response) => {
+          setOrders(response.data);
+        })
+        .catch(() => {
+          toast.error("Failed to fetch orders", {
+            position: "top-right",
+            autoClose: 3000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "colored",
+          });
+        });
+    }
+  }, [token]);
+
+  // Mark an order as delivered
   const markAsDelivered = (obj) => {
-    // const order = orders.find(order => order.id === orderId);
-    const vendor = obj.vendorStatus[0];
-    const vendorId = obj.orderStatus === "Processing" ?  obj.vendorStatus[0].vendorId : null;// Update this line as per your structure
+    const vendorId = obj.orderStatus === "Processing" ? obj.vendorStatus[0]?.vendorId : null;
 
     if (!vendorId) {
       toast.error("Vendor ID not found", {
@@ -74,7 +75,7 @@ function OrderList() {
         });
         setOrders(
           orders.map((order) =>
-            order.id === obj.id ? { ...order, orderStatus: status } : order // Update the order status in the UI
+            order.id === obj.id ? { ...order, orderStatus: status } : order
           )
         );
       })
@@ -92,6 +93,7 @@ function OrderList() {
       });
   };
 
+  // Cancel an order
   const cancelOrder = (orderId) => {
     const note = prompt("Please enter a note for cancellation");
     if (note) {
@@ -109,7 +111,7 @@ function OrderList() {
           });
           setOrders(
             orders.map((order) =>
-              order.id === orderId ? { ...order, orderStatus: "Cancelled" } : order // Change the status to "Cancelled"
+              order.id === orderId ? { ...order, orderStatus: "Cancelled" } : order
             )
           );
         })
@@ -147,35 +149,43 @@ function OrderList() {
           {orders.length > 0 ? (
             orders.map((order) => (
               <tr key={order.id}>
-                <td>{order.id}</td>
+                <td>{order.orderID}</td>
                 <td>{order.customerName}</td>
                 <td>{order.orderStatus}</td>
                 <td>{order.totalAmount}</td>
                 <td>
                   {order.vendorStatus?.map((vendor) => (
-                    <div key={vendor.vendorId}>
-                      {vendor.status}
-                    </div>
+                    <div key={vendor.vendorId}>{vendor.status}</div>
                   )) || <span>No vendor status available</span>}
                 </td>
                 <td className="btn-group">
-                  <Link to={`/orderDetail/${order.id}`} className="btn btn-primary btn-sm order-list-btn order-list-btn-primary">
+                  <Link
+                    to={`/orderDetail/${order.id}`}
+                    className="btn btn-primary btn-sm order-list-btn order-list-btn-primary"
+                  >
                     View
                   </Link>
                   <button
                     className="btn btn-success btn-sm order-list-btn order-list-btn-success"
-                    onClick={() => markAsDelivered(order)} // Pass only orderId
-                    disabled={order.orderStatus === "Delivered" || order.orderStatus === "Cancelled"} // Disable button if order is delivered
+                    onClick={() => markAsDelivered(order)}
+                    disabled={order.orderStatus === "Delivered"}
                   >
                     Delivered
                   </button>
-                  <button
-                    className="btn btn-danger btn-sm order-list-btn"
-                    onClick={() => cancelOrder(order.id)}
-                    disabled={order.orderStatus === "Cancelled" || order.orderStatus === "Delivered"} // Disable button if order is cancelled
-                  >
-                    Cancel
-                  </button>
+                  {/* Only show the Cancel button if the user is not a vendor */}
+                  {userRole !== "Vendor" && (
+                    <button
+                      className="btn btn-danger btn-sm order-list-btn"
+                      onClick={() => cancelOrder(order.id)}
+                      disabled={
+                        order.orderStatus === "Cancelled" ||
+                        order.orderStatus === "Delivered" ||
+                        order.orderStatus === "Dispatched"
+                      }
+                    >
+                      Cancel
+                    </button>
+                  )}
                 </td>
               </tr>
             ))
