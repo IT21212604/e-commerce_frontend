@@ -96,3 +96,10 @@
   color: #999;
   text-align: center;
 }
+
+.profile-icon {
+  font-size: 28px;
+  color: white;
+  cursor: pointer;
+  margin-right: 15px;
+}
