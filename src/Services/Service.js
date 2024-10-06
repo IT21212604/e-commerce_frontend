@@ -198,6 +198,18 @@ class Service {
     return axios.get(`${API_BASE_URL}/Notification/user/${userId}`, config);
   }
 
+  // Add this function for inventory retrieval
+  getAllInventory(token) { 
+    const config = {
+      headers: { 
+        'Authorization': 'Bearer ' + token 
+      }
+    }
+    return axios.get(`${API_BASE_URL}/Inventory`, config); // Adjust API endpoint if necessary
+  }
+
+
+
 }
 
 export default new Service();
