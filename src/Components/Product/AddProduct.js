@@ -187,7 +187,7 @@ function AddProduct() {
                 <div className="mb-3">
                   <label className="form-label">Price</label>
                   <input
-                    type="number"
+                    type="text"
                     className="form-control"
                     name="price"
                     value={formData.price}

@@ -96,3 +96,20 @@
   color: #999;
   text-align: center;
 }
+
+.notification-icon-wrapper {
+  position: relative;
+  display: inline-block;
+}
+
+.notification-count {
+  position: absolute;
+  top: -10px;
+  right: -10px;
+  background-color: rgb(169, 97, 84);
+  color: white;
+  border-radius: 50%;
+  padding: 1px 6px;
+  font-size: 12px;
+}
+

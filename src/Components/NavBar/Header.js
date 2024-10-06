@@ -11,6 +11,7 @@ const Header = ({ toggleSidebar, isLoggedIn }) => {
   const [showNotifications, setShowNotifications] = useState(false); // Toggle notification dropdown
   const [userRole, setUserRole] = useState(''); // State for user role
   const [userId, setUserId] = useState(''); // State for user ID
+  const [unreadCount, setUnreadCount] = useState(0); // State for unread notifications count
 
   // Extract user role and ID from token
   useEffect(() => {
@@ -34,6 +35,10 @@ const Header = ({ toggleSidebar, isLoggedIn }) => {
     try {
       const response = await Service.getAllNotificationsByUserId(token, userId); // Use the new service method
       setNotifications(response.data);
+
+      // Calculate unread notifications
+      const unread = response.data.filter(notification => !notification.isRead).length;
+      setUnreadCount(unread); // Set unread count
     } catch (error) {
       console.error('Error fetching notifications:', error);
     }
@@ -81,11 +86,17 @@ const Header = ({ toggleSidebar, isLoggedIn }) => {
           <>
             {userRole === 'Vendor' && (
               <div className="notification-wrapper">
-                <FontAwesomeIcon 
-                  icon={faBell} 
-                  className="notification-icon" 
-                  onClick={toggleNotificationDropdown} 
-                />
+                <div className="notification-icon-wrapper">
+                  <FontAwesomeIcon 
+                    icon={faBell} 
+                    className="notification-icon" 
+                    onClick={toggleNotificationDropdown} 
+                  />
+                  {/* {unreadCount > 0 && ( // Only show if there are unread notifications
+                    <span className="notification-count">{unreadCount}</span>
+                  )} */}
+                  <span className="notification-count">{unreadCount}</span>
+                </div>
                 {showNotifications && (
                   <div className="notification-dropdown">
                     {notifications.length > 0 ? (

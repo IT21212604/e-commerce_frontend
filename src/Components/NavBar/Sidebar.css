@@ -9,6 +9,7 @@
   flex-direction: column;
   justify-content: space-between;
   padding: 20px;
+  padding-top: 0px;
   box-shadow: 2px 0px 5px rgba(0, 0, 0, 0.2);
   transition: left 0.3s ease;
   z-index: 999; /* Below the header */
@@ -16,7 +17,7 @@
 
 .sidebar.open {
   left: 0; /* When open, slide in */
-  /* margin-top: 5px; */
+  margin-top: 5px;
 }
 
 .sidebar-logo {
@@ -87,8 +88,9 @@
 
 .sidebar-menu li.disabled a.disabled-link {
   pointer-events: none; /* Disable click */
-  color: #b0bec5; /* Disabled color */
-  background-color: #2d343f; /* Different background for disabled links */
+  color: #393e41; /* Disabled color */
+  /* Different background for disabled links */
+  /* background-color: #2d343f;  */
 }
 
 .sidebar-menu li.disabled a.disabled-link:hover {
