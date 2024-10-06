@@ -113,9 +113,47 @@
   font-size: 12px;
 }
 
-.profile-icon {
-  font-size: 28px;
-  color: white;
-  cursor: pointer;
-  margin-right: 15px;
+/* Profile wrapper for icon */
+.profile-wrapper {
+  position: relative;
+  display: inline-block;
+  margin-left: 15px;
 }
+
+/* Profile icon styling */
+.profile-icon {
+  font-size: 24px;
+  cursor: pointer;
+}
+
+/* Profile dropdown */
+.profile-dropdown {
+  position: absolute;
+  right: 0;
+  background-color: white;
+  min-width: 150px;
+  box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+  z-index: 1;
+  padding: 10px;
+  border-radius: 4px;
+}
+
+/* Each profile item */
+.profile-item {
+  padding: 8px 10px;
+  border-bottom: 1px solid #ddd;
+}
+
+.profile-item:last-child {
+  border-bottom: none;
+}
+
+.profile-item button {
+  width: 100%;
+}
+
+/* Logout button styling */
+.logout-button {
+  margin-left: 15px;
+}
+

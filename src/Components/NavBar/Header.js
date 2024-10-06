@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faBars, faBell } from '@fortawesome/free-solid-svg-icons'; // Import bell icon
+import { faBars, faBell, faUserCircle } from '@fortawesome/free-solid-svg-icons'; // Import user profile icon
 import { useNavigate } from 'react-router-dom'; 
 import './Header.css';
 import Service from '../../Services/Service'; // Import your service
@@ -11,7 +11,8 @@ const Header = ({ toggleSidebar, isLoggedIn }) => {
   const [showNotifications, setShowNotifications] = useState(false); // Toggle notification dropdown
   const [userRole, setUserRole] = useState(''); // State for user role
   const [userId, setUserId] = useState(''); // State for user ID
-  const [unreadCount, setUnreadCount] = useState(0); // State for unread notifications count
+  const [userName, setUserName] = useState(''); // State for user name
+  const [showProfileDropdown, setShowProfileDropdown] = useState(false); // Toggle profile dropdown
 
   // Extract user role and ID from token
   useEffect(() => {
@@ -20,6 +21,7 @@ const Header = ({ toggleSidebar, isLoggedIn }) => {
       const userData = JSON.parse(atob(storedToken.split('.')[1])); // Decode JWT token payload
       setUserRole(userData.role); // Set the user role from the token
       setUserId(userData.id); // Assuming the ID is also in the token
+      setUserName(userData.name); // Assuming user name is in the token
     }
   }, []);
 
@@ -35,10 +37,6 @@ const Header = ({ toggleSidebar, isLoggedIn }) => {
     try {
       const response = await Service.getAllNotificationsByUserId(token, userId); // Use the new service method
       setNotifications(response.data);
-
-      // Calculate unread notifications
-      const unread = response.data.filter(notification => !notification.isRead).length;
-      setUnreadCount(unread); // Set unread count
     } catch (error) {
       console.error('Error fetching notifications:', error);
     }
@@ -58,8 +56,26 @@ const Header = ({ toggleSidebar, isLoggedIn }) => {
     window.location.href = '/login';
   };
 
+  const handleDeleteAccount = async () => {
+    const token = sessionStorage.getItem("token");
+    try {
+      await Service.deleteUserAccount(token, userId); // Assuming a service method for deleting the user
+      handleLogout(); // Automatically log out the user after account deletion
+    } catch (error) {
+      console.error('Error deleting account:', error);
+    }
+  };
+
+  const handleUpdateAccount = () => {
+    navigate('/update-profile'); // Navigate to the update profile page
+  };
+
   const toggleNotificationDropdown = () => {
     setShowNotifications(!showNotifications);
+  };
+
+  const toggleProfileDropdown = () => {
+    setShowProfileDropdown(!showProfileDropdown); // Toggle user profile dropdown
   };
 
   return (
@@ -84,19 +100,14 @@ const Header = ({ toggleSidebar, isLoggedIn }) => {
           </>
         ) : (
           <>
+            {/* Notification Bell */}
             {userRole === 'Vendor' && (
               <div className="notification-wrapper">
-                <div className="notification-icon-wrapper">
-                  <FontAwesomeIcon 
-                    icon={faBell} 
-                    className="notification-icon" 
-                    onClick={toggleNotificationDropdown} 
-                  />
-                  {/* {unreadCount > 0 && ( // Only show if there are unread notifications
-                    <span className="notification-count">{unreadCount}</span>
-                  )} */}
-                  <span className="notification-count">{unreadCount}</span>
-                </div>
+                <FontAwesomeIcon 
+                  icon={faBell} 
+                  className="notification-icon" 
+                  onClick={toggleNotificationDropdown} 
+                />
                 {showNotifications && (
                   <div className="notification-dropdown">
                     {notifications.length > 0 ? (
@@ -112,7 +123,35 @@ const Header = ({ toggleSidebar, isLoggedIn }) => {
                 )}
               </div>
             )}
-            <button className="btn btn-danger" onClick={handleLogout}>
+
+            {/* User Profile Icon */}
+            <div className="profile-wrapper">
+              <FontAwesomeIcon 
+                icon={faUserCircle} 
+                className="profile-icon" 
+                onClick={toggleProfileDropdown} 
+              />
+              {showProfileDropdown && (
+                <div className="profile-dropdown">
+                  <div className="profile-item">Name: {userName}</div>
+                  <div className="profile-item">Role: {userRole}</div>
+                  <div className="profile-item">User ID: {userId}</div>
+                  <div className="profile-item">
+                    <button className="btn btn-primary" onClick={handleUpdateAccount}>
+                      Update Account
+                    </button>
+                  </div>
+                  <div className="profile-item">
+                    <button className="btn btn-danger" onClick={handleDeleteAccount}>
+                      Delete Account
+                    </button>
+                  </div>
+                </div>
+              )}
+            </div>
+
+            {/* Logout Button in Nav Bar */}
+            <button className="btn btn-danger logout-button" onClick={handleLogout}>
               Logout
             </button>
           </>
