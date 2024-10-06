@@ -1,11 +1,43 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faBars } from '@fortawesome/free-solid-svg-icons';
+import { faBars, faBell } from '@fortawesome/free-solid-svg-icons'; // Import bell icon
 import { useNavigate } from 'react-router-dom'; 
 import './Header.css';
+import Service from '../../Services/Service'; // Import your service
 
 const Header = ({ toggleSidebar, isLoggedIn }) => {
   const navigate = useNavigate(); 
+  const [notifications, setNotifications] = useState([]); // State to store notifications
+  const [showNotifications, setShowNotifications] = useState(false); // Toggle notification dropdown
+  const [userRole, setUserRole] = useState(''); // State for user role
+  const [userId, setUserId] = useState(''); // State for user ID
+
+  // Extract user role and ID from token
+  useEffect(() => {
+    const storedToken = sessionStorage.getItem("token");
+    if (storedToken) {
+      const userData = JSON.parse(atob(storedToken.split('.')[1])); // Decode JWT token payload
+      setUserRole(userData.role); // Set the user role from the token
+      setUserId(userData.id); // Assuming the ID is also in the token
+    }
+  }, []);
+
+  // Fetch notifications if user is a vendor
+  useEffect(() => {
+    if (userRole === 'Vendor' && userId) {
+      fetchNotifications();
+    }
+  }, [userRole, userId]);
+
+  const fetchNotifications = async () => {
+    const token = sessionStorage.getItem("token"); // Get the token
+    try {
+      const response = await Service.getAllNotificationsByUserId(token, userId); // Use the new service method
+      setNotifications(response.data);
+    } catch (error) {
+      console.error('Error fetching notifications:', error);
+    }
+  };
 
   const handleLogin = () => {
     navigate('/login'); 
@@ -16,12 +48,13 @@ const Header = ({ toggleSidebar, isLoggedIn }) => {
   };
 
   const handleLogout = () => {
-    // Clear token from local storage or session storage
     localStorage.removeItem('token');
     sessionStorage.removeItem('token');
-  
-    // Redirect user to the login page
     window.location.href = '/login';
+  };
+
+  const toggleNotificationDropdown = () => {
+    setShowNotifications(!showNotifications);
   };
 
   return (
@@ -45,9 +78,33 @@ const Header = ({ toggleSidebar, isLoggedIn }) => {
             </button>
           </>
         ) : (
-          <button className="btn btn-secondary" onClick={handleLogout}>
-            Logout
-          </button>
+          <>
+            {userRole === 'Vendor' && (
+              <div className="notification-wrapper">
+                <FontAwesomeIcon 
+                  icon={faBell} 
+                  className="notification-icon" 
+                  onClick={toggleNotificationDropdown} 
+                />
+                {showNotifications && (
+                  <div className="notification-dropdown">
+                    {notifications.length > 0 ? (
+                      notifications.map((notification, index) => (
+                        <div key={index} className={`notification-item ${notification.isRead ? 'read' : 'unread'}`}>
+                          {notification.message}
+                        </div>
+                      ))
+                    ) : (
+                      <div className="no-notifications">No notifications</div>
+                    )}
+                  </div>
+                )}
+              </div>
+            )}
+            <button className="btn btn-danger" onClick={handleLogout}>
+              Logout
+            </button>
+          </>
         )}
       </div>
     </header>

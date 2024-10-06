@@ -186,8 +186,8 @@ class Service {
     return axios.patch(`${API_BASE_URL}/Orders/deliver/${id}?vendorId=${vendorId}&status=${status}`, null, config);
   }
 
-  // Add new method to send notifications
-  sendNotification(token, userId, message) {
+  // Method to getAllNotificationsByUserId
+  getAllNotificationsByUserId(token, userId) {
     const config = {
       headers: {
         //"Access-Control-Allow-Origin": "*",
@@ -195,7 +195,7 @@ class Service {
       },
     };
 
-    return axios.post(`${API_BASE_URL}/Notification`, { userId, message }, config);
+    return axios.get(`${API_BASE_URL}/Notification/user/${userId}`, config);
   }
 
 }
