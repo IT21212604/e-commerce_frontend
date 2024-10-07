@@ -46,6 +46,32 @@ class Service {
     return axios.get(`${API_BASE_URL}/User/${id}`, config);
   }
 
+   // Function to get users
+   updateUserById(token, id) { //token
+    const config = {
+        headers: { 
+            // 'Access-Control-Allow-Origin': "*", 
+            'Authorization': 'Bearer ' + token 
+        }
+    }
+
+    return axios.put(`${API_BASE_URL}/User/${id}`, config);
+  }
+
+   // Function to get users
+   deleteUserById(token, id) { //token
+    const config = {
+        headers: { 
+            // 'Access-Control-Allow-Origin': "*", 
+            'Authorization': 'Bearer ' + token 
+        }
+    }
+
+    return axios.delete(`${API_BASE_URL}/User/${id}`, config);
+  }
+
+
+
   activateUser(token, id){ //token, id, formData
     const config = {
         headers: { 
@@ -208,7 +234,15 @@ class Service {
     return axios.get(`${API_BASE_URL}/Inventory`, config); // Adjust API endpoint if necessary
   }
 
-
+  // Add this function for inventory retrieval
+  deleteInventoryById(token, itemId) { 
+    const config = {
+      headers: { 
+        'Authorization': 'Bearer ' + token 
+      }
+    }
+    return axios.delete(`${API_BASE_URL}/Inventory/${itemId}`, config); // Adjust API endpoint if necessary
+  }
 
 }
 

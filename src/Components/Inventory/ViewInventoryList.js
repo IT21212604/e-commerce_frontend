@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { Table, Form, InputGroup, Button } from "react-bootstrap";
+import { Table, Form, InputGroup, Button, Modal } from "react-bootstrap"; // Import Modal
 import Sidebar from "../NavBar/Sidebar";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { FaSearch, FaTrash } from "react-icons/fa"; 
+import { FaSearch, FaTrash } from "react-icons/fa";
 import Service from "../../Services/Service";
-import "./ViewInventoryList.css"; 
+import "./ViewInventoryList.css";
 import StockQuantityChart from "./StockQuantityChart";
 
 function ViewInventoryList() {
@@ -14,11 +14,13 @@ function ViewInventoryList() {
   const [products, setProducts] = useState([]);
   const [vendors, setVendors] = useState([]);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
-  const [showChart, setShowChart] = useState(false); 
-  const [chartData, setChartData] = useState([]); 
-  const [selectedProduct, setSelectedProduct] = useState(""); 
-  const [searchTerm, setSearchTerm] = useState(""); 
-  const [filteredInventory, setFilteredInventory] = useState([]); 
+  const [showChart, setShowChart] = useState(false);
+  const [chartData, setChartData] = useState([]);
+  const [selectedProduct, setSelectedProduct] = useState("");
+  const [searchTerm, setSearchTerm] = useState("");
+  const [filteredInventory, setFilteredInventory] = useState([]);
+  const [showDeleteModal, setShowDeleteModal] = useState(false); // State to control delete confirmation modal
+  const [itemToDelete, setItemToDelete] = useState(null); // State to keep track of the item to be deleted
 
   const toggleSidebar = () => {
     setIsSidebarOpen(!isSidebarOpen);
@@ -28,7 +30,7 @@ function ViewInventoryList() {
     Service.getAllInventory(token)
       .then((res) => {
         setInventory(res.data);
-        setFilteredInventory(res.data); 
+        setFilteredInventory(res.data);
 
         const productIds = [
           ...new Set(res.data.map((item) => item.productId).filter((id) => id)),
@@ -87,20 +89,29 @@ function ViewInventoryList() {
     }));
 
     setChartData(newChartData);
-    setSelectedProduct(productName); 
-    setShowChart(true); 
+    setSelectedProduct(productName);
+    setShowChart(true);
   };
 
-  const handleDelete = (itemId) => {
-    Service.deleteInventoryById(token, itemId)
+  const handleDeleteClick = (itemId) => {
+    setItemToDelete(itemId);
+    setShowDeleteModal(true); // Open the confirmation modal
+  };
+
+  const handleConfirmDelete = () => {
+    Service.deleteInventoryById(token, itemToDelete)
       .then(() => {
-        setInventory(inventory.filter((item) => item.id !== itemId));
-        setFilteredInventory(filteredInventory.filter((item) => item.id !== itemId));
+        setInventory(inventory.filter((item) => item.id !== itemToDelete));
+        setFilteredInventory(filteredInventory.filter((item) => item.id !== itemToDelete));
         toast.success("Item deleted successfully", { theme: "colored" });
       })
       .catch((err) => {
         console.error("Error deleting item:", err);
         toast.error("Failed to delete item. Please try again.", { theme: "colored" });
+      })
+      .finally(() => {
+        setShowDeleteModal(false); // Close the modal after deletion
+        setItemToDelete(null); // Clear the item to be deleted
       });
   };
 
@@ -157,7 +168,7 @@ function ViewInventoryList() {
               <th>Stock Quantity</th>
               <th>Low Stock Alert</th>
               <th>Last Updated</th>
-              <th>Action</th> {/* New column for Action */}
+              <th>Action</th>
             </tr>
           </thead>
           <tbody>
@@ -183,17 +194,33 @@ function ViewInventoryList() {
                   <td>
                     <Button
                       variant="danger"
-                      onClick={() => handleDelete(item.id)}
+                      onClick={() => handleDeleteClick(item.id)} // Open confirmation modal on delete click
                     >
-                      <FaTrash /> Delete
+                      <FaTrash />
                     </Button>
-                  </td> {/* Action column with delete button */}
+                  </td>
                 </tr>
               );
             })}
           </tbody>
         </Table>
       </div>
+
+      {/* Confirmation Modal */}
+      <Modal show={showDeleteModal} onHide={() => setShowDeleteModal(false)}>
+        <Modal.Header closeButton>
+          <Modal.Title>Confirm Deletion</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>Are you sure you want to delete this item?</Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={() => setShowDeleteModal(false)}>
+            Cancel
+          </Button>
+          <Button variant="danger" onClick={handleConfirmDelete}>
+            Delete
+          </Button>
+        </Modal.Footer>
+      </Modal>
 
       <StockQuantityChart
         show={showChart}

@@ -20,14 +20,9 @@ function Home() {
           Sellforce<span style={{color:'red'}}>+</span>
           </h1>
           <p className="primary-text">
-            Manage your employees efficiently with our powerful tools.
-            Our system is designed to streamline your HR processes, 
-            enabling you to focus on what truly matters—growing your business.
+          Manage your online store with ease and efficiency! Our comprehensive e-commerce back-office system empowers 
+          users to operate seamlessly and enhance customer satisfaction.
           </p>
-          {/* <ul className="features-list">
-            <li>✔️ Easy Employee Onboarding: Seamlessly add new employees and manage their details with our user-friendly interface.</li>
-            <li>✔️ Comprehensive Employee Profiles: Store and access detailed employee information including contact details, job roles, and performance metrics.</li>
-          </ul> */}
           <button className="secondary-button" onClick={handleGetStarted}>
             Get Started <FiArrowRight />
           </button>
