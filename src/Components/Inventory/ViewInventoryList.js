@@ -43,7 +43,9 @@ function ViewInventoryList() {
         fetchVendors(vendorIds);
 
         const chartData = res.data.map((item) => ({
-          name: products.find((prod) => prod.id === item.productId)?.name || "Unknown",
+          name:
+            products.find((prod) => prod.id === item.productId)?.name ||
+            "Unknown",
           stockQuantity: item.stockQuantity,
         }));
         setChartData(chartData);
@@ -54,7 +56,7 @@ function ViewInventoryList() {
           theme: "colored",
         });
       });
-  }, [token, products]);
+  }, []);
 
   const fetchProducts = async (productIds) => {
     try {
@@ -84,7 +86,8 @@ function ViewInventoryList() {
 
   const handleStockClick = (stockHistory, productName) => {
     const newChartData = inventory.map((item) => ({
-      name: products.find((prod) => prod.id === item.productId)?.name || "Unknown",
+      name:
+        products.find((prod) => prod.id === item.productId)?.name || "Unknown",
       stockQuantity: item.stockQuantity,
     }));
 
@@ -102,12 +105,16 @@ function ViewInventoryList() {
     Service.deleteInventoryById(token, itemToDelete)
       .then(() => {
         setInventory(inventory.filter((item) => item.id !== itemToDelete));
-        setFilteredInventory(filteredInventory.filter((item) => item.id !== itemToDelete));
+        setFilteredInventory(
+          filteredInventory.filter((item) => item.id !== itemToDelete)
+        );
         toast.success("Item deleted successfully", { theme: "colored" });
       })
       .catch((err) => {
         console.error("Error deleting item:", err);
-        toast.error("Failed to delete item. Please try again.", { theme: "colored" });
+        toast.error("Failed to delete item. Please try again.", {
+          theme: "colored",
+        });
       })
       .finally(() => {
         setShowDeleteModal(false); // Close the modal after deletion
@@ -184,7 +191,9 @@ function ViewInventoryList() {
                   <td>{product?.name || "Unknown Product"}</td>
                   <td>{vendor?.name || "Unknown Vendor"}</td>
                   <td
-                    onClick={() => handleStockClick([item.stockQuantity], product?.name)}
+                    onClick={() =>
+                      handleStockClick([item.stockQuantity], product?.name)
+                    }
                     style={{ cursor: "pointer", color: "blue" }}
                   >
                     {item.stockQuantity}

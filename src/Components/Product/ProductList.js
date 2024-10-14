@@ -341,14 +341,6 @@
 
 // export default ProductList;
 
-
-
-
-
-
-
-
-
 // ProductList.js
 
 import React, { useEffect, useState } from "react";
@@ -411,7 +403,9 @@ function ProductList() {
   const fetchVendors = async (vendorIds) => {
     try {
       const vendorData = await Promise.all(
-        vendorIds.map((id) => Service.getUserById(token, id).then((res) => res.data))
+        vendorIds.map((id) =>
+          Service.getUserById(token, id).then((res) => res.data)
+        )
       );
       setVendors(vendorData);
     } catch (error) {
@@ -553,7 +547,6 @@ function ProductList() {
         }`}
       >
         <h2 className="text-center mb-4">Product List</h2>
-        
 
         {/* Filters in a horizontal layout */}
         <div className="mb-3 d-flex justify-content-between">

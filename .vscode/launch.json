@@ -1,15 +1,22 @@
 {
     "version": "0.2.0",
     "configurations": [
-        
       {
-        "name": "Debug React App",
-        "type": "chrome",
+        "name": "Launch Chrome",
         "request": "launch",
-        "url": "http://localhost:3000",  // Your React app's running URL
-        "webRoot": "${workspaceFolder}/src",
-        "breakOnLoad": true,
-        "sourceMaps": true
+        "type": "chrome",
+        "url": "http://localhost:3000",
+        "webRoot": "${workspaceFolder}"
       }
+        
+      // {
+      //   "name": "Debug React App",
+      //   "type": "chrome",
+      //   "request": "launch",
+      //   "url": "http://localhost:3000",  // Your React app's running URL
+      //   "webRoot": "${workspaceFolder}/src",
+      //   "breakOnLoad": true,
+      //   "sourceMaps": true
+      // }
     ]
   }

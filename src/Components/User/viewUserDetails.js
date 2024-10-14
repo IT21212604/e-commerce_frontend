@@ -24,7 +24,7 @@ function ViewUserDetails() {
     Service.getUsers(token) // Call the Service to fetch users
       .then((response) => {
         const usersData = response.data; // Adjust this based on the API response structure
-        
+
         if (Array.isArray(usersData)) {
           setUsers(usersData); // Set fetched users to state if it's an array
         } else {
@@ -84,23 +84,30 @@ function ViewUserDetails() {
         });
 
         // Update the user's status in the local state
-        setUsers(users.map(user =>
-          user.id === selectedUserId ? { ...user, status: "Active" } : user
-        ));
+        setUsers(
+          users.map((user) =>
+            user.id === selectedUserId ? { ...user, status: "Active" } : user
+          )
+        );
         handleCloseModal(); // Close the modal after activation
       })
       .catch((error) => {
         console.error("Activation Error:", error.response); // Log the error response for debugging
-        toast.error(`Error activating user: ${error.response.data.message || "Unknown error"}`, {
-          position: "top-right",
-          autoClose: 3000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "colored",
-        });
+        toast.error(
+          `Error activating user: ${
+            error.response.data.message || "Unknown error"
+          }`,
+          {
+            position: "top-right",
+            autoClose: 3000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "colored",
+          }
+        );
         handleCloseModal(); // Close the modal on error
       });
   };
@@ -111,9 +118,10 @@ function ViewUserDetails() {
   };
 
   // Filtered users based on search term
-  const filteredUsers = users.filter(user =>
-    user.userType.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    user.email.toLowerCase().includes(searchTerm.toLowerCase()) // Include email search
+  const filteredUsers = users.filter(
+    (user) =>
+      user.userType.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      user.email.toLowerCase().includes(searchTerm.toLowerCase()) // Include email search
   );
 
   return (
@@ -121,21 +129,28 @@ function ViewUserDetails() {
       <Sidebar isOpen={isSidebarOpen} toggleSidebar={toggleSidebar} />
       <ToastContainer />
 
-      <div className={`user-details-container container mt-5 ${isSidebarOpen ? "with-sidebar" : ""}`}>
+      <div
+        className={`user-details-container container mt-5 ${
+          isSidebarOpen ? "with-sidebar" : ""
+        }`}
+      >
         <div className="user-details shadow-lg p-4 rounded">
           <h2 className="text-center mb-4">User Details</h2>
-          
+
           {/* Search Bar */}
           <div className="d-flex justify-content-end mb-3">
             <div className="input-group">
-              <input 
-                type="text" 
-                className="form-control" 
-                placeholder="Search by user type or email" 
-                value={searchTerm} 
-                onChange={handleSearchChange} 
+              <input
+                type="text"
+                className="form-control"
+                placeholder="Search by user type or email"
+                value={searchTerm}
+                onChange={handleSearchChange}
               />
-              <button className="btn btn-primary" onClick={() => setSearchTerm("")}>
+              <button
+                className="btn btn-primary"
+                onClick={() => setSearchTerm("")}
+              >
                 Search
               </button>
             </div>
@@ -161,9 +176,10 @@ function ViewUserDetails() {
                     <td>{user.userType}</td>
                     <td>
                       {user.status === "Inactive" ? (
-                        <button 
+                        <button
                           className="btn btn-success btn-sm"
-                          onClick={() => handleOpenModal(user.id)}>
+                          onClick={() => handleOpenModal(user.id)}
+                        >
                           Activate
                         </button>
                       ) : (

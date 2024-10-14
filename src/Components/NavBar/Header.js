@@ -115,8 +115,12 @@ const Header = ({ toggleSidebar, isLoggedIn }) => {
   const handleUpdateUserDetails = async (updatedData) => {
     const token = sessionStorage.getItem("token");
     try {
+      const payload = {
+        id:userId,
+        name: updatedData.name,
+      };
       // Make an API call to update user details
-      const response = await Service.updateUserById(token, userId, updatedData);
+      const response = await Service.updateUserById(token, payload);
       if (response && response.data) {
         // Update the profile information in the header with the new details
         setUserName(updatedData.name);

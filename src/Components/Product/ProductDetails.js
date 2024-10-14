@@ -15,6 +15,7 @@ function ProductDetails() {
   const [filteredProducts, setFilteredProducts] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const [reload, setreload] = useState(false);
 
   // Modal states
   const [showModal, setShowModal] = useState(false);
@@ -47,7 +48,7 @@ function ProductDetails() {
           theme: "colored",
         });
       });
-  }, [token]);
+  }, [token,reload]);
 
   const fetchVendors = async (vendorIds) => {
     try {
@@ -112,24 +113,19 @@ function ProductDetails() {
   };
 
   const updateProduct = () => {
-    const formData = {
-      name: selectedProduct.name,
-      category: selectedProduct.category,
-      price: selectedProduct.price,
-      status: selectedProduct.status,
-      vendorId: selectedProduct.vendorId,
-    };
+    
 
-    Service.updateProductById(token, selectedProduct.id, formData)
+    Service.updateProductById(token, selectedProduct.id, selectedProduct)
       .then(() => {
         toast.success("Product updated successfully", {
           theme: "colored",
         });
-        setProducts(
-          products.map((product) =>
-            product.id === selectedProduct.id ? { ...selectedProduct } : product
-          )
-        );
+        // setProducts(
+        //   products.map((product) =>
+        //     product.id === selectedProduct.id ? { ...selectedProduct } : product
+        //   )
+        // );
+        setreload(!reload)
         setShowModal(false);
       })
       .catch(() => {

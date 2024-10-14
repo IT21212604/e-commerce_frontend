@@ -1,5 +1,5 @@
-import React from 'react';
-import { Modal, Button } from 'react-bootstrap';
+import React from "react";
+import { Modal, Button } from "react-bootstrap";
 import {
   LineChart,
   Line,
@@ -9,11 +9,11 @@ import {
   Tooltip,
   Legend,
   ResponsiveContainer,
-} from 'recharts';
+} from "recharts";
 
 const StockQuantityChart = ({ show, handleClose, data, selectedProduct }) => {
   // Define a color palette for the lines
-  const colors = '#8884d8';
+  const colors = "#8884d8";
 
   return (
     <Modal show={show} onHide={handleClose} size="lg" centered>
@@ -37,7 +37,11 @@ const StockQuantityChart = ({ show, handleClose, data, selectedProduct }) => {
                 key={product.name}
                 type="monotone"
                 dataKey="stockQuantity"
-                stroke={selectedProduct === product.name ? "#ff7300" : colors[index % colors.length]} // Assign different colors
+                stroke={
+                  selectedProduct === product.name
+                    ? "#ff7300"
+                    : colors[index % colors.length]
+                } // Assign different colors
                 strokeWidth={selectedProduct === product.name ? 3 : 1}
                 activeDot={{ r: 8 }}
               />

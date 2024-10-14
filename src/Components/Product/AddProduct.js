@@ -1,25 +1,25 @@
-import React, { useEffect, useState } from 'react';
-import Sidebar from '../NavBar/Sidebar'; // Import Sidebar component
-import './AddProduct.css'; // Import custom CSS for styling
-import { ToastContainer, toast } from 'react-toastify'; // Import Toast for notifications
-import 'react-toastify/dist/ReactToastify.css'; // Import Toast CSS
-import Service from '../../Services/Service'; // Import the Service class for API calls
+import React, { useEffect, useState } from "react";
+import Sidebar from "../NavBar/Sidebar"; // Import Sidebar component
+import "./AddProduct.css"; // Import custom CSS for styling
+import { ToastContainer, toast } from "react-toastify"; // Import Toast for notifications
+import "react-toastify/dist/ReactToastify.css"; // Import Toast CSS
+import Service from "../../Services/Service"; // Import the Service class for API calls
 import { useNavigate, Link } from "react-router-dom";
 
 function AddProduct() {
   const [formData, setFormData] = useState({
-    productId: '',
-    name: '',
-    category: '', // Initially empty for dropdown
-    vendorId: '', // Initially empty for vendor ID
+    productId: "",
+    name: "",
+    category: "", // Initially empty for dropdown
+    vendorId: "", // Initially empty for vendor ID
     price: 0,
-    description: '',
+    description: "",
     stockQuantity: 0,
-    status: 'active', // Default status
+    status: "active", // Default status
   });
 
   const navigate = useNavigate();
-  
+
   const [token, settoken] = useState(sessionStorage.getItem("token"));
   const [categories, setCategories] = useState([]); // State for categories
   const [vendors, setVendors] = useState([]); // State for vendors
@@ -42,10 +42,12 @@ function AddProduct() {
 
         // Fetch all users to get vendors
         const usersResponse = await Service.getUsers(token);
-        console.log(usersResponse)
-        const vendorUsers = usersResponse.data.filter(user => user.userType === 'Vendor'); // Filter for vendor role
+        console.log(usersResponse);
+        const vendorUsers = usersResponse.data.filter(
+          (user) => user.userType === "Vendor"
+        ); // Filter for vendor role
         setVendors(vendorUsers);
-        console.log(vendors)
+        console.log(vendors);
       } catch (err) {
         console.error("Error fetching data:", err);
         toast.error("Failed to load categories or vendors. Please try again.", {
@@ -65,7 +67,14 @@ function AddProduct() {
   };
 
   const validateForm = () => {
-    if (!formData.productId || !formData.name || !formData.price || !formData.category || !formData.vendorId || !formData.stockQuantity) {
+    if (
+      !formData.productId ||
+      !formData.name ||
+      !formData.price ||
+      !formData.category ||
+      !formData.vendorId ||
+      !formData.stockQuantity
+    ) {
       toast.error("Please fill in all required fields", { theme: "colored" });
       return false;
     }
@@ -81,6 +90,7 @@ function AddProduct() {
     // Add timestamps for createdAt and updatedAt
     const productData = {
       ...formData,
+      VendorName:"",
       createdAt: new Date().toISOString(),
       updatedAt: new Date().toISOString(),
     };
@@ -93,20 +103,25 @@ function AddProduct() {
         toast.success("Product added successfully!", { theme: "colored" });
         // Reset the form after successful submission
         setFormData({
-          productId: '',
-          name: '',
-          category: '',
-          vendorId: '',
+          productId: "",
+          name: "",
+          category: "",
+          vendorId: "",
           price: 0,
-          description: '',
+          description: "",
           stockQuantity: 0,
-          status: 'Active', // Reset status to default
+          status: "Active", // Reset status to default
         });
         navigate("/productDetails");
       }
     } catch (error) {
-      console.error("Error adding product:", error.response?.data || error.message);
-      toast.error("Failed to add product. Please try again.", { theme: "colored" });
+      console.error(
+        "Error adding product:",
+        error.response?.data || error.message
+      );
+      toast.error("Failed to add product. Please try again.", {
+        theme: "colored",
+      });
     }
   };
 
@@ -118,7 +133,11 @@ function AddProduct() {
       <ToastContainer />
 
       {/* Main content */}
-      <div className={`add-product-container container mt-5 ${isSidebarOpen ? 'with-sidebar' : ''}`}>
+      <div
+        className={`add-product-container container mt-5 ${
+          isSidebarOpen ? "with-sidebar" : ""
+        }`}
+      >
         <div className="form-inputs mt-3">
           <h2 className="text-center mb-4">Add Product</h2>
           <form onSubmit={handleSubmit}>

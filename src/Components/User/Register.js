@@ -1,19 +1,19 @@
 import React, { useState } from "react";
 import Sidebar from "../NavBar/Sidebar"; // Import Sidebar component
 import "./Register.css"; // Import custom CSS file
-import { ToastContainer, toast } from 'react-toastify';
+import { ToastContainer, toast } from "react-toastify";
 import Service from "../../Services/Service";
 import { useNavigate, Link } from "react-router-dom"; // Import Link for navigation
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"; 
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons"; // Import icons
 
 function Register() {
   const navigate = useNavigate();
 
-  const [name, setName] = useState('');
-  const [password, setPassword] = useState('');
-  const [email, setEmail] = useState('');
-  const [userType, setUserType] = useState('');
+  const [name, setName] = useState("");
+  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState("");
+  const [userType, setUserType] = useState("");
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [showPassword, setShowPassword] = useState(false); // State for password visibility
 
@@ -33,7 +33,7 @@ function Register() {
     return passwordRegex.test(password);
   };
 
-  function handleValidationErrorMsg(msg){
+  function handleValidationErrorMsg(msg) {
     toast.error(msg, {
       position: "top-right",
       autoClose: 5000,
@@ -50,25 +50,27 @@ function Register() {
     e.preventDefault(); // Prevent the default form submission behavior
 
     // Validate inputs
-    if (name === '' || email === '' || password === '' || userType === '') {
-      handleValidationErrorMsg('Inputs cannot be empty');
+    if (name === "" || email === "" || password === "" || userType === "") {
+      handleValidationErrorMsg("Inputs cannot be empty");
       return;
     }
-    
+
     if (!isValidEmail(email)) {
-      handleValidationErrorMsg('Please enter a valid email address');
+      handleValidationErrorMsg("Please enter a valid email address");
       return;
     }
 
     if (!isValidPassword(password)) {
-      handleValidationErrorMsg('Password must be at least 6 characters long, contain at least 1 number, and 1 special character.');
+      handleValidationErrorMsg(
+        "Password must be at least 6 characters long, contain at least 1 number, and 1 special character."
+      );
       return;
     }
 
     Service.register(name, email, password, userType)
       .then((res) => {
         if (res.status === 200 || res.data.success) {
-          toast.success('Registration successful! Redirecting to login...', {
+          toast.success("Registration successful! Redirecting to login...", {
             position: "top-right",
             autoClose: 5000,
             hideProgressBar: false,
@@ -82,12 +84,12 @@ function Register() {
             navigate("/login");
           }, 5000);
         } else {
-          handleValidationErrorMsg('Registration failed. Please try again.');
+          handleValidationErrorMsg("Registration failed. Please try again.");
         }
       })
       .catch((err) => {
         console.log(err);
-        handleValidationErrorMsg('Registration failed. Please try again.');
+        handleValidationErrorMsg("Registration failed. Please try again.");
       });
   }
 
@@ -104,7 +106,11 @@ function Register() {
       <ToastContainer />
 
       {/* Registration Form */}
-      <div className={`register-container container mt-5 ${isSidebarOpen ? "with-sidebar" : ""}`}>
+      <div
+        className={`register-container container mt-5 ${
+          isSidebarOpen ? "with-sidebar" : ""
+        }`}
+      >
         <div className="register-form shadow-lg p-5 rounded">
           <h2 className="text-center mb-4">Create Account</h2>
           <form onSubmit={handleRegister}>
@@ -115,7 +121,7 @@ function Register() {
                 className="form-control"
                 name="name"
                 value={name}
-                onChange={(e) => setName(e.target.value)} 
+                onChange={(e) => setName(e.target.value)}
                 required
               />
             </div>
@@ -141,13 +147,16 @@ function Register() {
                   onChange={(e) => setPassword(e.target.value)}
                   required
                 />
-                <FontAwesomeIcon 
-                  icon={showPassword ? faEyeSlash : faEye} 
-                  className="password-toggle-icon" 
-                  onClick={togglePasswordVisibility} 
+                <FontAwesomeIcon
+                  icon={showPassword ? faEyeSlash : faEye}
+                  className="password-toggle-icon"
+                  onClick={togglePasswordVisibility}
                 />
               </div>
-              <small className="text-muted">Password must be at least 6 characters, with 1 number and 1 special character.</small>
+              <small className="text-muted">
+                Password must be at least 6 characters, with 1 number and 1
+                special character.
+              </small>
             </div>
             <div className="mb-3">
               <label className="form-label">User Type</label>
@@ -171,7 +180,9 @@ function Register() {
 
           {/* Section to redirect to login */}
           <div className="mt-4 text-center">
-            <p>Already have an account? <Link to="/login">Login here</Link></p>
+            <p>
+              Already have an account? <Link to="/login">Login here</Link>
+            </p>
           </div>
         </div>
       </div>

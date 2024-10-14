@@ -3,7 +3,7 @@ import "./UpdateUserModal.css"; // You can style the modal using this CSS file
 
 const UpdateUserModal = ({ show, handleClose, userDetails, handleUpdate }) => {
   const [updatedName, setUpdatedName] = React.useState(userDetails.name);
-  const [updatedEmail] = React.useState(userDetails.email); // Make email state read-only
+  const [updatedEmail,setUpdatedEmail] = React.useState(userDetails.email); // Make email state read-only
 
   const handleSave = () => {
     handleUpdate({ name: updatedName, email: updatedEmail });
@@ -11,7 +11,8 @@ const UpdateUserModal = ({ show, handleClose, userDetails, handleUpdate }) => {
   };
 
   React.useEffect(() => {
-    setUpdatedName(userDetails.name); // Update state if userDetails change
+    setUpdatedName(userDetails.name);
+    setUpdatedEmail(userDetails.email) // Update state if userDetails change
   }, [userDetails]);
 
   if (!show) {
@@ -42,10 +43,18 @@ const UpdateUserModal = ({ show, handleClose, userDetails, handleUpdate }) => {
             />
           </div>
           <div className="modal-buttons">
-            <button type="button" className="btn btn-secondary" onClick={handleClose}>
+            <button
+              type="button"
+              className="btn btn-secondary"
+              onClick={handleClose}
+            >
               Cancel
             </button>
-            <button type="button" className="btn btn-primary" onClick={handleSave}>
+            <button
+              type="button"
+              className="btn btn-primary"
+              onClick={handleSave}
+            >
               Save
             </button>
           </div>
